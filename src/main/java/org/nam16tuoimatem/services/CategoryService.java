@@ -1,19 +1,16 @@
 package org.nam16tuoimatem.services;
 
-import jakarta.transaction.TransactionManager;
-import jakarta.transaction.Transactional;
-import org.hibernate.Transaction;
 import org.nam16tuoimatem.dao.CategoryDao;
-import org.nam16tuoimatem.entity.CategoryEntity;
+import org.nam16tuoimatem.entity.Category;
 
-public class CategoryService {
+public class CategoryService extends TransactionManager<Category> {
     private final CategoryDao categoryDao;
 
     public CategoryService(CategoryDao categoryDao) {
         this.categoryDao = categoryDao;
     }
 
-    public CategoryEntity findOne(Integer id){
-        return  categoryDao.findOne(id);
+    public Category findOne(Integer id) {
+        return doInTransaction(() -> categoryDao.findOne(id));
     }
 }

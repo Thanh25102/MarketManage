@@ -12,8 +12,10 @@ repositories {
 dependencies {
     implementation("org.hibernate:hibernate-core:6.1.7.Final")
     implementation("com.mysql:mysql-connector-j:8.0.32")
+    implementation("org.apache.logging.log4j:log4j-core:2.20.0")
+    compileOnly("org.projectlombok:lombok:1.18.26")
+    annotationProcessor("org.projectlombok:lombok:1.18.26")
 
-    compileOnly("org.projectlombok:lombok:1.18.24")
     implementation("com.google.code.gson:gson:2.10.1")
 
 
