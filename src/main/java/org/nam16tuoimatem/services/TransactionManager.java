@@ -1,12 +1,17 @@
 package org.nam16tuoimatem.services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.nam16tuoimatem.config.HibernateInitialize;
 
+import java.io.IOException;
 import java.util.List;
 
 public class TransactionManager<T> {
+    private final Logger LOG = LogManager.getLogger(TransactionManager.class);
     private final SessionFactory factory;
 
     public TransactionManager() {
@@ -15,38 +20,55 @@ public class TransactionManager<T> {
 
     protected List<T> doInTransaction(GetList<T> test) {
         Transaction transaction = null;
+        Session session = factory.getCurrentSession();
         try {
-            transaction = factory.getCurrentSession().beginTransaction();
+            transaction = session.beginTransaction();
             List<T> result = test.execute();
             transaction.commit();
             return result;
         } catch (Exception e) {
-            transaction.rollback();
-            return null;
+            if (transaction != null) transaction.rollback();
+            LOG.error("Can't not execute service : " + e);
+        } finally {
+            if (session != null)
+                session.close();
         }
+        return null;
     }
 
     protected T doInTransaction(Get<T> test) {
         Transaction transaction = null;
+        Session session = null;
         try {
-            transaction = factory.getCurrentSession().beginTransaction();
+            session = factory.getCurrentSession();
+            transaction = session.beginTransaction();
             T result = test.execute();
             transaction.commit();
             return result;
         } catch (Exception e) {
-            transaction.rollback();
-            return null;
+            if (transaction != null) transaction.rollback();
+            LOG.error("Can't not execute service : " + e);
+        } finally {
+            if (session != null)
+                session.close();
         }
+        return null;
     }
 
     protected void doInTransaction(IExecute execute) {
         Transaction transaction = null;
+        Session session = null;
         try {
-            transaction = factory.getCurrentSession().beginTransaction();
+            session = factory.getCurrentSession();
+            transaction = session.beginTransaction();
             execute.execute();
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction != null) transaction.rollback();
+            LOG.error("Can't not execute service : " + e);
+        } finally {
+            if (session != null)
+                session.close();
         }
     }
 
@@ -55,7 +77,7 @@ public class TransactionManager<T> {
     }
 
     protected interface Get<E> {
-        E execute();
+        E execute() throws IOException;
     }
 
     protected interface IExecute {

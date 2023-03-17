@@ -10,16 +10,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDetail {
-    @Basic
     @Column(name = "OrderID", nullable = false)
-    private Object orderId;
-    @Basic
+    @Id
+    private Integer orderId;
     @Column(name = "VegetableID", nullable = false)
+    @Id
     private Integer vegetableId;
-    @Basic
     @Column(name = "Quantity", nullable = false)
     private Byte quantity;
-    @Basic
     @Column(name = "Price", nullable = false, precision = 0)
     private Double price;
     @ManyToOne

@@ -14,10 +14,8 @@ public class Category {
     @Id
     @Column(name = "CatagoryID", nullable = false)
     private Integer categoryId;
-    @Basic
     @Column(name = "Name", nullable = false, length = 30)
     private String name;
-    @Basic
     @Column(name = "Description", nullable = true, length = 50)
     private String description;
 }
