@@ -1,26 +1,50 @@
 package org.nam16tuoimatem.services;
 
-import org.nam16tuoimatem.dao.CategoryDao;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.nam16tuoimatem.config.HibernateInitialize;
 import org.nam16tuoimatem.entity.Category;
 
 import java.util.List;
 
 public class CategoryService {
-    private final CategoryDao categoryDao;
+    private final SessionFactory factory;
     private final TransactionManager<Category> transaction;
 
-    public CategoryService(CategoryDao categoryDao, TransactionManager<Category> transaction) {
-        this.categoryDao = categoryDao;
+    public CategoryService( TransactionManager<Category> transaction) {
+        factory = HibernateInitialize.factory;
         this.transaction = transaction;
     }
 
     public Category findOne(Integer id) {
-        return transaction.doInTransaction(() ->
-                categoryDao.findOne(id)
+        return transaction.doInTransaction(() -> {
+                    Session session = factory.getCurrentSession();
+                    return session.get(Category.class, id);
+                }
         );
     }
 
     public List<Category> findAll() {
-        return transaction.doInTransaction(categoryDao::findAll);
+        return transaction.doInTransaction(() -> {
+            Session session = factory.getCurrentSession();
+            return session.createQuery("FROM Category").getResultList();
+        });
+    }
+
+    public List<Category> findAll2() {
+        return transaction.doInTransaction(() -> {
+            Session session = factory.getCurrentSession();
+            // Create CriteriaBuilder
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            // Create CriteriaQuery
+            CriteriaQuery<Category> query = builder.createQuery(Category.class);
+            // Set the root entity and select all records
+            Root<Category> root = query.from(Category.class);
+            query.select(root);
+            return session.createQuery(query).getResultList();
+        });
     }
 }

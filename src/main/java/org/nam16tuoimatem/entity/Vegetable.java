@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
@@ -17,8 +17,8 @@ public class Vegetable {
     @Column(name = "VegetableID", nullable = false)
     private Integer vegetableId;
     @Column(name = "CatagoryID", nullable = false)
-    private Integer categoryId;
-    @Column(name = "VegetableName", nullable = false, length = 30)
+    private Integer catagoryId;
+    @Column(name = "Vegetable_Name", nullable = true, length = 50)
     private String vegetableName;
     @Column(name = "Unit", nullable = false, length = 20)
     private String unit;
@@ -28,9 +28,4 @@ public class Vegetable {
     private String image;
     @Column(name = "Price", nullable = false, precision = 0)
     private Double price;
-    @ManyToOne
-    @JoinColumn(name = "CatagoryID", referencedColumnName = "CatagoryID", nullable = false)
-    private Category categoryByCategoryId;
-    @OneToMany(mappedBy = "vegetableByVegetableId")
-    private Collection<OrderDetail> orderDetailsByVegetableId;
 }

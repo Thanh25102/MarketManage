@@ -2,7 +2,7 @@ package org.nam16tuoimatem.config;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.nam16tuoimatem.entity.Category;
+import org.nam16tuoimatem.entity.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,10 +14,9 @@ public class HibernateInitialize {
      * Add entity to session factory of hibernate
      */
     private static final List<Class> classes = List.of(
-            Category.class
+        Category.class, Customers.class, Order.class, OrderDetail.class, Vegetable.class
     );
     public static SessionFactory factory = build();
-
     private static SessionFactory build() {
         Configuration configuration = new Configuration().setProperties(properties());
         /**

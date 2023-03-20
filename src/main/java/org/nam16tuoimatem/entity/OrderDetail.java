@@ -1,14 +1,19 @@
 package org.nam16tuoimatem.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class OrderDetail {
     @Column(name = "OrderID", nullable = false)
     @Id
@@ -20,7 +25,4 @@ public class OrderDetail {
     private Byte quantity;
     @Column(name = "Price", nullable = false, precision = 0)
     private Double price;
-    @ManyToOne
-    @JoinColumn(name = "OrderID", referencedColumnName = "OrderID", nullable = false)
-    private Order orderByOrderId;
 }
