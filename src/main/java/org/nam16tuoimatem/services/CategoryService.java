@@ -14,17 +14,24 @@ public class CategoryService {
     private final SessionFactory factory;
     private final TransactionManager<Category> transaction;
 
-    public CategoryService( TransactionManager<Category> transaction) {
+    private static CategoryService instance;
+
+    public static CategoryService getInstance() {
+        if(instance == null)
+            instance = new CategoryService();
+        return instance;
+    }
+
+    private CategoryService() {
         factory = HibernateInitialize.factory;
-        this.transaction = transaction;
+        this.transaction = new TransactionManager<>();
     }
 
     public Category findOne(Integer id) {
         return transaction.doInTransaction(() -> {
-                    Session session = factory.getCurrentSession();
-                    return session.get(Category.class, id);
-                }
-        );
+            Session session = factory.getCurrentSession();
+            return session.get(Category.class, id);
+        });
     }
 
     public List<Category> findAll() {
@@ -37,11 +44,8 @@ public class CategoryService {
     public List<Category> findAll2() {
         return transaction.doInTransaction(() -> {
             Session session = factory.getCurrentSession();
-            // Create CriteriaBuilder
             CriteriaBuilder builder = session.getCriteriaBuilder();
-            // Create CriteriaQuery
             CriteriaQuery<Category> query = builder.createQuery(Category.class);
-            // Set the root entity and select all records
             Root<Category> root = query.from(Category.class);
             query.select(root);
             return session.createQuery(query).getResultList();

@@ -2,11 +2,14 @@ package org.nam16tuoimatem.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NaturalId;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class Customers {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
