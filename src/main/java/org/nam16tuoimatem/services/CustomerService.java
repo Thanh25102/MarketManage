@@ -1,7 +1,5 @@
 package org.nam16tuoimatem.services;
 
-import org.hibernate.SessionFactory;
-import org.nam16tuoimatem.config.HibernateInitialize;
 import org.nam16tuoimatem.entity.Customers;
 
 import java.util.List;

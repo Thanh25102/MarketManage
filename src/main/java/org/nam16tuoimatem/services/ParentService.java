@@ -9,19 +9,12 @@ import lombok.Data;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.nam16tuoimatem.config.HibernateInitialize;
-import org.nam16tuoimatem.entity.Customers;
 
 import java.util.List;
 
 class ParentService<T> {
     protected final TransactionManager<T> transaction;
     protected final SessionFactory factory;
-    @Data
-    @AllArgsConstructor
-    public static class SearchMap {
-        private String field;
-        private Object value;
-    }
     private final Class<T> type;
 
     protected ParentService(Class<T> type) {
@@ -46,5 +39,12 @@ class ParentService<T> {
 
         TypedQuery<T> query = session.createQuery(criteria);
         return query.getResultList();
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class SearchMap {
+        private String field;
+        private Object value;
     }
 }

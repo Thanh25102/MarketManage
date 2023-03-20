@@ -11,20 +11,19 @@ import org.nam16tuoimatem.entity.Category;
 import java.util.List;
 
 public class CategoryService {
+    private static CategoryService instance;
     private final SessionFactory factory;
     private final TransactionManager<Category> transaction;
-
-    private static CategoryService instance;
-
-    public static CategoryService getInstance() {
-        if(instance == null)
-            instance = new CategoryService();
-        return instance;
-    }
 
     private CategoryService() {
         factory = HibernateInitialize.factory;
         this.transaction = new TransactionManager<>();
+    }
+
+    public static CategoryService getInstance() {
+        if (instance == null)
+            instance = new CategoryService();
+        return instance;
     }
 
     public Category findOne(Integer id) {

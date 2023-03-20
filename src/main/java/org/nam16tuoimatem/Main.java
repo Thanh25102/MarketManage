@@ -15,7 +15,10 @@ public class Main {
         CategoryService categoryService = CategoryService.getInstance();
         categoryService.findAll().forEach(LOG::info);
         CustomerService customerService = CustomerService.getInstance();
-        customerService.findByFields(List.of(new CustomerService.SearchMap("city", "london"), new CustomerService.SearchMap("address", "30 Broadway"))).forEach(System.out::println);
+        customerService.findByFields(List.of(
+                new CustomerService.SearchMap("city", "london"),
+                new CustomerService.SearchMap("address", "30 Broadway"))
+        ).forEach(System.out::println);
 
     }
 
