@@ -34,8 +34,8 @@ public class CustomerService extends ParentService<Customers> {
         return transaction.doInTransaction(() -> findByFields(factory.getCurrentSession(), searchMap));
     }
 
-    public void saveOrUpdate(Customers customers) {
-        transaction.doInTransaction(() ->
+    public Customers saveOrUpdate(Customers customers) {
+        return transaction.doInTransaction(() ->
                 factory.getCurrentSession().merge(customers)
         );
     }

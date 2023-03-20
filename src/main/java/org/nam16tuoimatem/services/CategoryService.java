@@ -4,20 +4,15 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.nam16tuoimatem.config.HibernateInitialize;
 import org.nam16tuoimatem.entity.Category;
 
 import java.util.List;
 
-public class CategoryService {
+public class CategoryService extends ParentService<Category> {
     private static CategoryService instance;
-    private final SessionFactory factory;
-    private final TransactionManager<Category> transaction;
 
     private CategoryService() {
-        factory = HibernateInitialize.factory;
-        this.transaction = new TransactionManager<>();
+        super(Category.class);
     }
 
     public static CategoryService getInstance() {
@@ -27,17 +22,17 @@ public class CategoryService {
     }
 
     public Category findOne(Integer id) {
-        return transaction.doInTransaction(() -> {
-            Session session = factory.getCurrentSession();
-            return session.get(Category.class, id);
-        });
+        return transaction.doInTransaction(() ->
+                factory.getCurrentSession().get(Category.class, id)
+        );
+    }
+
+    public List<Category> findByFields(List<SearchMap> searchMap) {
+        return transaction.doInTransaction(() -> findByFields(factory.getCurrentSession(), searchMap));
     }
 
     public List<Category> findAll() {
-        return transaction.doInTransaction(() -> {
-            Session session = factory.getCurrentSession();
-            return session.createQuery("FROM Category").getResultList();
-        });
+        return transaction.doInTransaction(() -> factory.getCurrentSession().createQuery("FROM Category").getResultList());
     }
 
     public List<Category> findAll2() {
