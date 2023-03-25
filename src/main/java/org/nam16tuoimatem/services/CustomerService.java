@@ -3,6 +3,7 @@ package org.nam16tuoimatem.services;
 import org.nam16tuoimatem.entity.Customers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CustomerService extends ParentService<Customers> {
 
@@ -21,7 +22,7 @@ public class CustomerService extends ParentService<Customers> {
     public List<Customers> findAll() {
         return transaction.doInTransaction(() ->
                 factory.getCurrentSession().createQuery("FROM Customers").getResultList()
-        );
+        ).stream().collect(Collectors.toList());
     }
 
     public Customers findOne(Long id) {
@@ -31,7 +32,7 @@ public class CustomerService extends ParentService<Customers> {
     }
 
     public List<Customers> findByFields(List<SearchMap> searchMap) {
-        return transaction.doInTransaction(() -> findByFields(factory.getCurrentSession(), searchMap));
+        return transaction.doInTransaction(() -> findByFields(factory.getCurrentSession(), searchMap)).stream().collect(Collectors.toList());
     }
 
     public Customers saveOrUpdate(Customers customers) {

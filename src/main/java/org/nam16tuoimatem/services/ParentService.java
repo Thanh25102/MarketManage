@@ -20,12 +20,12 @@ class ParentService<T> {
     protected ParentService(Class<T> type) {
         this.type = type;
         factory = HibernateInitialize.factory;
-        transaction = new TransactionManager<T>();
+        transaction = new TransactionManager();
     }
 
     protected List<T> findByFields(Session session, List<SearchMap> searchMap) {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<T> criteria = criteriaBuilder.createQuery(type);
+        CriteriaQuery<T> criteria = getCriteriaQuery(session);
         Root<T> root = criteria.from(type);
 
         criteria.select(root);
@@ -39,6 +39,14 @@ class ParentService<T> {
 
         TypedQuery<T> query = session.createQuery(criteria);
         return query.getResultList();
+    }
+
+    protected CriteriaQuery<T> getCriteriaQuery(Session session) {
+        return session.getCriteriaBuilder().createQuery(type);
+    }
+
+    protected Root<T> getRoot(Session session) {
+        return getCriteriaQuery(session).from(type);
     }
 
     @Data
