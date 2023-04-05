@@ -29,7 +29,7 @@ public class TransactionManager<T> {
             return result;
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
-            LOG.error("Can't not execute service : " + e);
+            LOG.error("Can't not execute service : " + this.getClass() + " Error :" + e);
         } finally {
             if (session != null)
                 session.close();

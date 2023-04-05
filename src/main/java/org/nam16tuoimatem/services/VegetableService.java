@@ -1,15 +1,19 @@
 package org.nam16tuoimatem.services;
 
+import org.nam16tuoimatem.dao.VegetableRepo;
 import org.nam16tuoimatem.entity.Vegetable;
+import org.nam16tuoimatem.model.SearchMap;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class VegetableService extends ParentService<Vegetable> {
     private static VegetableService instance;
+    private final VegetableRepo vegetableRepo;
 
     private VegetableService() {
         super(Vegetable.class);
+        vegetableRepo = VegetableRepo.getInstance();
     }
 
     public static VegetableService getInstance() {
@@ -18,15 +22,15 @@ public class VegetableService extends ParentService<Vegetable> {
     }
 
     public List<Vegetable> findAll() {
-        return transaction.doInTransaction(() -> factory.getCurrentSession().createQuery("FROM Vegetable").getResultList()).stream().collect(Collectors.toList());
+        return (List<Vegetable>) transaction.doInTransaction(() -> vegetableRepo.findAll());
     }
 
     public Vegetable findOne(Integer id) {
-        return transaction.doInTransaction(() -> factory.getCurrentSession().get(Vegetable.class, id));
+        return transaction.doInTransaction(() -> vegetableRepo.findOne(id));
     }
 
     public List<Vegetable> findByFields(List<SearchMap> searchMap) {
-        return transaction.doInTransaction(() -> findByFields(factory.getCurrentSession(), searchMap)).stream().collect(Collectors.toList());
+        return transaction.doInTransaction(() -> vegetableRepo.findByFields(searchMap)).stream().collect(Collectors.toList());
     }
 
     public Double totalMoney() {
@@ -35,15 +39,10 @@ public class VegetableService extends ParentService<Vegetable> {
                 .mapToDouble(vegetable -> vegetable.getPrice() * vegetable.getAmount())
                 .sum();
     }
-
     public Vegetable saveOrUpdate(Vegetable vegetable) {
-        return transaction.doInTransaction(() -> factory.getCurrentSession().merge(vegetable));
+        return transaction.doInTransaction(() -> vegetableRepo.saveOrUpdate(vegetable));
     }
-
     public void delete(Integer id) {
-        transaction.doInTransaction(() ->
-                factory.getCurrentSession().createQuery("delete from Vegetable where id =: i")
-                        .setParameter("i", id).executeUpdate()
-        );
+        transaction.doInTransaction(() ->  vegetableRepo.delete(id));
     }
 }
