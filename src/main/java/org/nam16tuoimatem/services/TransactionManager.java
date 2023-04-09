@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.nam16tuoimatem.config.HibernateInitialize;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 public class TransactionManager<T> {
@@ -18,7 +19,7 @@ public class TransactionManager<T> {
         this.factory = HibernateInitialize.factory;
     }
 
-    protected List<T> doInTransaction(GetList<T> test) {
+    protected Collection<T> doInTransaction(GetList<T> test) {
         Transaction transaction = null;
         Session session = factory.getCurrentSession();
         try {
@@ -28,7 +29,7 @@ public class TransactionManager<T> {
             return result;
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
-            LOG.error("Can't not execute service : " + e);
+            LOG.error("Can't not execute service : " + this.getClass() + " Error :" + e);
         } finally {
             if (session != null)
                 session.close();

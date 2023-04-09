@@ -16,7 +16,7 @@ public class Vegetable {
     private Integer vegetableId;
     @Column(name = "CatagoryID", nullable = false)
     private Integer catagoryId;
-    @Column(name = "Vegetable_Name", nullable = true, length = 50)
+    @Column(name = "Vegetable_Name", length = 50)
     private String vegetableName;
     @Column(name = "Unit", nullable = false, length = 20)
     private String unit;

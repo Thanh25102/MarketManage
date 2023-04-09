@@ -1,14 +1,17 @@
 package org.nam16tuoimatem.services;
 
+import org.nam16tuoimatem.dao.OrderRepo;
 import org.nam16tuoimatem.entity.Order;
 
 import java.util.List;
 
 public class OrderService extends ParentService<Order> {
     private static OrderService instance;
+    private final OrderRepo orderRepo;
 
     private OrderService() {
         super(Order.class);
+        orderRepo = OrderRepo.getInstance();
     }
 
     private OrderService getInstance() {
@@ -17,10 +20,10 @@ public class OrderService extends ParentService<Order> {
     }
 
     public List<Order> findAll() {
-        return transaction.doInTransaction(() -> factory.getCurrentSession().createQuery("FROM Order").getResultList());
+        return (List<Order>) transaction.doInTransaction(() -> orderRepo.findAll());
     }
 
     public Order saveOrUpdate(Order order) {
-        return transaction.doInTransaction(() -> factory.getCurrentSession().merge(order));
+        return transaction.doInTransaction(() -> orderRepo.saveOrUpdate(order));
     }
 }
