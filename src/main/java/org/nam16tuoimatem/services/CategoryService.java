@@ -27,8 +27,16 @@ public class CategoryService extends ParentService<Category> {
     public List<Category> findByFields(List<SearchMap> searchMap) {
         return (List<Category>) transaction.doInTransaction(() -> categoryRepo.findByFields(searchMap));
     }
+    
+     public Category saveOrUpdate(Category category) {
+        return transaction.doInTransaction(() -> categoryRepo.saveOrUpdate(category));
+    }
 
     public List<Category> findAll() {
         return (List<Category>) transaction.doInTransaction(() -> categoryRepo.findAll());
+    }
+    
+     public void delete(Integer id) {
+        transaction.doInTransaction(() -> categoryRepo.delete(id));
     }
 }

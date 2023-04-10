@@ -4,17 +4,48 @@
  */
 package org.nam16tuoimatem.gui.Import;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.nam16tuoimatem.entity.Category;
+import org.nam16tuoimatem.entity.Category;
+import org.nam16tuoimatem.gui.tablemodel.BaseTable;
+import org.nam16tuoimatem.model.SearchMap;
+import org.nam16tuoimatem.services.CategoryService;
+import org.nam16tuoimatem.services.CategoryService;
+import org.nam16tuoimatem.utils.NotificationUtil;
+
 /**
  *
  * @author popu
  */
-public class ImportCatagoryGUI extends javax.swing.JPanel {
+public class ImportCategoryGUI extends javax.swing.JPanel {
+
+    private List<Category> list;
+    private BaseTable model;
 
     /**
-     * Creates new form ImportCatagoryGUI
+     * Creates new form ImportCategoryGUI
      */
-    public ImportCatagoryGUI() {
+    public ImportCategoryGUI() {
         initComponents();
+        initTable();
+    }
+
+    private void initTable() {
+        list = CategoryService.getInstance().findAll();
+        list.forEach(c -> System.out.println(c));
+        model = new BaseTable<>(list, Category.class);
+        tableCategory.setModel(model);
+    }
+
+    private void reloadTable() {
+        model.setData(list);
+        model.fireTableDataChanged();
+    }
+
+    private void resetForm() {
+        txtCategoryName.setText("");
+        txtDescription.setText("");
     }
 
     /**
@@ -36,6 +67,9 @@ public class ImportCatagoryGUI extends javax.swing.JPanel {
         btnDelete = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
         btnSearch = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        txtDescription = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(800, 500));
 
@@ -115,13 +149,38 @@ public class ImportCatagoryGUI extends javax.swing.JPanel {
             }
         });
 
+        jLabel2.setText("Description");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -134,7 +193,10 @@ public class ImportCatagoryGUI extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -152,26 +214,95 @@ public class ImportCatagoryGUI extends javax.swing.JPanel {
 
     private void tableCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCategoryMouseClicked
         // TODO add your handling code here:
+        Integer selected = tableCategory.getSelectedRow();
+        if (selected >= 0) {
+            int id = (int) tableCategory.getValueAt(selected, 0);
+            list.stream().forEach(item -> {
+                if (item.getCategoryId()== id) {
+                    txtCategoryName.setText(item.getName());
+                    txtDescription.setText(item.getDescription());
+                }
+            });
+
+        }
     }//GEN-LAST:event_tableCategoryMouseClicked
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
+        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to add ?");
+        if (choice == NotificationUtil.NO) {
+            return;
+        }
+
+        Category instructor = new Category();
+
+        instructor.setName(txtCategoryName.getText());        
+        instructor.setDescription(txtDescription.getText());
+
+
+        list.add(CategoryService.getInstance().saveOrUpdate(instructor));
+        reloadTable();
+        resetForm();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
+        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to update");
+        if (choice == NotificationUtil.NO) {
+            return;
+        }
+
+        Integer selected = tableCategory.getSelectedRow();
+        if (selected >= 0) {
+            int id = (int) tableCategory.getValueAt(selected, 0);
+            Category instructor = CategoryService.getInstance().findOne(id);
+
+            instructor.setName(txtCategoryName.getText());
+            instructor.setDescription(txtDescription.getText());
+            
+            CategoryService.getInstance().saveOrUpdate(instructor);
+
+            initTable();
+            resetForm();
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
+        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to delete");
+        if (choice == NotificationUtil.NO) {
+            return;
+        }
+        Integer selected = tableCategory.getSelectedRow();
+        if (selected >= 0) {
+            int id = (int) tableCategory.getValueAt(selected, 0);
+            CategoryService.getInstance().delete(id);
+            initTable();
+            resetForm();
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         // TODO add your handling code here:
+        resetForm();
+        initTable();
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
+        List<SearchMap> search = new ArrayList<>();
+
+        if (!txtCategoryName.getText().equals("")) {
+            search.add(new SearchMap("name", txtCategoryName.getText()));
+        }
+        
+         if (!txtDescription.getText().equals("")) {
+            search.add(new SearchMap("description", txtDescription.getText()));
+        }
+
+        list = CategoryService.getInstance().findByFields(search);
+
+        reloadTable();
     }//GEN-LAST:event_btnSearchActionPerformed
 
 
@@ -182,9 +313,12 @@ public class ImportCatagoryGUI extends javax.swing.JPanel {
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableCategory;
     private javax.swing.JTextField txtCategoryName;
+    private javax.swing.JTextField txtDescription;
     // End of variables declaration//GEN-END:variables
 }
