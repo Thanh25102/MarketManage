@@ -18,19 +18,17 @@ public class OrderRepo extends BaseRepo<Order> implements CrudRepository<Order> 
 
     @Override
     public List<Order> findAll() {
-        return factory.getCurrentSession()
-                .createQuery("FROM Order")
-                .getResultList();
+        return super.findAll();
     }
 
     @Override
     public Order findOne(Integer id) {
-        return factory.getCurrentSession().get(Order.class, id);
+        return findById(id);
     }
 
     @Override
     public Order saveOrUpdate(Order order) {
-        return factory.getCurrentSession().merge(order);
+        return super.saveOrUpdate(order);
     }
 
     @Override
