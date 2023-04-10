@@ -4,8 +4,6 @@
  */
 package org.nam16tuoimatem.gui.Import;
 
-import org.nam16tuoimatem.utils.NotificationUtil;
-
 /**
  *
  * @author popu
@@ -318,7 +316,7 @@ public class ImportVegetableGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_tableVegetableMouseClicked
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+//        // TODO add your handling code here:
 //        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to add ?");
 //        if (choice == NotificationUtil.NO) {
 //            return;
@@ -335,7 +333,7 @@ public class ImportVegetableGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // TODO add your handling code here:
+//        // TODO add your handling code here:
 //        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to update");
 //        if (choice == NotificationUtil.NO) {
 //            return;
@@ -357,7 +355,7 @@ public class ImportVegetableGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+//        // TODO add your handling code here:
 //        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to delete");
 //        if (choice == NotificationUtil.NO) {
 //            return;
