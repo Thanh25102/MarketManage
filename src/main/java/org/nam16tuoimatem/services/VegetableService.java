@@ -24,7 +24,7 @@ public class VegetableService extends ParentService<Vegetable> {
 
     public List<VegetableRecord> findAll() {
         List<Vegetable> vegetables = (List<Vegetable>) transaction.doInTransaction(vegetableRepo::findAll);
-        return vegetables.stream().map(v -> new VegetableRecord(v.getVegetableId(), v.getVegetableName(), v.getUnit(), v.getAmount(), v.getImage(), v.getPrice())).collect(Collectors.toList());
+        return vegetables.stream().map(v -> new VegetableRecord(v.getVegetableId(), v.getVegetableName(), v.getUnit(), v.getAmount(), v.getImage(), v.getPrice(), v.getCategoryByCategoryId().getName())).collect(Collectors.toList());
     }
 
     public Vegetable findOne(Integer id) {

@@ -4,17 +4,66 @@
  */
 package org.nam16tuoimatem.gui.Import;
 
+
+import java.lang.reflect.Field;
+import java.util.List;
+import org.nam16tuoimatem.entity.Category;
+import org.nam16tuoimatem.entity.Vegetable;
+import org.nam16tuoimatem.gui.tablemodel.BaseTable;
+import org.nam16tuoimatem.gui.tablemodel.ItemRenderer;
+import org.nam16tuoimatem.model.Item;
+import org.nam16tuoimatem.services.CategoryService;
+import org.nam16tuoimatem.services.VegetableService;
+import org.nam16tuoimatem.utils.NotificationUtil;
+import org.nam16tuoimatem.Record.VegetableRecord;
+
+
 /**
  *
  * @author popu
  */
 public class ImportVegetableGUI extends javax.swing.JPanel {
 
+    private List<VegetableRecord> list;
+    private BaseTable model;
+
     /**
      * Creates new form ImportCatagoryGUI
      */
     public ImportVegetableGUI() {
         initComponents();
+        initTable();
+    }
+
+    private void initTable() {
+      
+            list = VegetableService.getInstance().findAll();
+            model = new BaseTable<>(list, VegetableRecord.class);
+            tableVegetable.setModel(model);
+    
+
+//        cbCategory.removeAll();
+//         cbCategory.setRenderer(new ItemRenderer());
+//         cbCategory.addItem(new Item(null, "### CATEGORY NAME ###"));
+//         
+//         CategoryService.getInstance().findAll().forEach(instructor
+//                        -> cbCategory.addItem(new Item(instructor.getCategoryId(), 
+//                                instructor.getName())));
+    }
+
+    private void reloadTable() {
+        model.setData(list);
+        model.fireTableDataChanged();
+    }
+
+    private void resetForm() {
+        txtVegetableName.setText("");
+        txtUnit.setText("");
+        txtImage.setText("");
+        cbCategory.setSelectedIndex(0);
+        spAmount.setValue(0);
+        spPrice.setValue(0);
+
     }
 
     /**
@@ -192,8 +241,6 @@ public class ImportVegetableGUI extends javax.swing.JPanel {
         );
 
         jLabel6.setText("Category");
-
-        cbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -399,7 +446,7 @@ public class ImportVegetableGUI extends javax.swing.JPanel {
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox<String> cbCategory;
+    private javax.swing.JComboBox<Item> cbCategory;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
