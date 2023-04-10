@@ -29,9 +29,6 @@ public class Vegetable {
     @Basic
     @Column(name = "Price", nullable = false, precision = 0)
     private Double price;
-    @Basic
-    @Column(name = "CustomerID", nullable = false)
-    private Integer customerId;
     @ManyToOne
     @JoinColumn(name = "CatagoryID", referencedColumnName = "CatagoryID", nullable = false)
     private Category categoryByCategoryId;
