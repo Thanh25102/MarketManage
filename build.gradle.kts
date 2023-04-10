@@ -1,9 +1,17 @@
 plugins {
     id("java")
-}
 
+}
 group = "org.name16tuoimatem"
 version = "1.0.0"
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType<JavaCompile> {
+    options.compilerArgs.addAll(arrayOf("--release", "17"))
+}
 
 repositories {
     mavenCentral()

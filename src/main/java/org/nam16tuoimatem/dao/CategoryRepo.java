@@ -15,27 +15,4 @@ public class CategoryRepo extends BaseRepo<Category> implements CrudRepository<C
         if (instance == null) instance = new CategoryRepo();
         return instance;
     }
-
-    @Override
-    public List<Category> findAll() {
-        return super.findAll();
-    }
-
-
-    @Override
-    public Category findOne(Integer id) {
-        return findById(id);
-    }
-
-    @Override
-    public Category saveOrUpdate(Category category) {
-        return super.saveOrUpdate(category);
-    }
-
-    @Override
-    public void delete(Integer id) {
-        Category category = new Category();
-        category.setCategoryId(id);
-        factory.getCurrentSession().remove(category);
-    }
 }

@@ -4,6 +4,7 @@
  */
 package org.nam16tuoimatem.gui.Import;
 
+
 import java.lang.reflect.Field;
 import java.util.List;
 import org.nam16tuoimatem.entity.Category;
@@ -14,6 +15,8 @@ import org.nam16tuoimatem.model.Item;
 import org.nam16tuoimatem.services.CategoryService;
 import org.nam16tuoimatem.services.VegetableService;
 import org.nam16tuoimatem.utils.NotificationUtil;
+import org.nam16tuoimatem.Record.VegetableRecord;
+
 
 /**
  *
@@ -21,7 +24,7 @@ import org.nam16tuoimatem.utils.NotificationUtil;
  */
 public class ImportVegetableGUI extends javax.swing.JPanel {
 
-    private List<Vegetable> list;
+    private List<VegetableRecord> list;
     private BaseTable model;
 
     /**
@@ -33,12 +36,11 @@ public class ImportVegetableGUI extends javax.swing.JPanel {
     }
 
     private void initTable() {
-        try {
+      
             list = VegetableService.getInstance().findAll();
-            model = new BaseTable<>(list, Category.class, hireDate);
+            model = new BaseTable<>(list, VegetableRecord.class);
             tableVegetable.setModel(model);
-        } catch (NoSuchFieldException e) {
-        }
+    
 
 //        cbCategory.removeAll();
 //         cbCategory.setRenderer(new ItemRenderer());
@@ -361,7 +363,7 @@ public class ImportVegetableGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_tableVegetableMouseClicked
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+//        // TODO add your handling code here:
 //        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to add ?");
 //        if (choice == NotificationUtil.NO) {
 //            return;
@@ -378,7 +380,7 @@ public class ImportVegetableGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // TODO add your handling code here:
+//        // TODO add your handling code here:
 //        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to update");
 //        if (choice == NotificationUtil.NO) {
 //            return;
@@ -400,7 +402,7 @@ public class ImportVegetableGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+//        // TODO add your handling code here:
 //        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to delete");
 //        if (choice == NotificationUtil.NO) {
 //            return;

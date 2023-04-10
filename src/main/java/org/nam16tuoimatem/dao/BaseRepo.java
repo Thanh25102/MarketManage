@@ -11,7 +11,7 @@ import org.nam16tuoimatem.model.SearchMap;
 
 import java.util.List;
 
-class BaseRepo<T> {
+class BaseRepo<T> implements CrudRepository<T>{
     protected final SessionFactory factory;
     private final Class<T> type;
 
@@ -20,7 +20,7 @@ class BaseRepo<T> {
         factory = HibernateInitialize.factory;
     }
 
-    public T findById(Integer id) {
+    public T findOne(Integer id) {
         return factory.getCurrentSession().get(type, id);
     }
 
@@ -54,7 +54,10 @@ class BaseRepo<T> {
     public T saveOrUpdate(T data) {
         return factory.getCurrentSession().merge(data);
     }
+    @Override
+    public void delete(Integer id) {
 
+    }
     protected CriteriaQuery<T> getCriteriaQuery(Session session) {
         return session.getCriteriaBuilder().createQuery(type);
     }
