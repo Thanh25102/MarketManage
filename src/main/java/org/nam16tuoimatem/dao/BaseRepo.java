@@ -23,10 +23,12 @@ class BaseRepo<T> {
     public T findById(Integer id) {
         return factory.getCurrentSession().get(type, id);
     }
+
     public List<T> findAll() {
         Session session = factory.getCurrentSession();
-        CriteriaQuery<T> query = getCriteriaQuery(factory.getCurrentSession());
-        query.select(getRoot(session));
+        CriteriaQuery<T> query = getCriteriaQuery(session);
+        Root<T> root = query.from(type);
+        query.select(root);
         return session.createQuery(query).getResultList();
     }
 
@@ -56,10 +58,5 @@ class BaseRepo<T> {
     protected CriteriaQuery<T> getCriteriaQuery(Session session) {
         return session.getCriteriaBuilder().createQuery(type);
     }
-
-    protected Root<T> getRoot(Session session) {
-        return getCriteriaQuery(session).from(type);
-    }
-
 
 }
