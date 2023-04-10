@@ -78,7 +78,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="org.nam16tuoimatem.gui.Import.ImportCatagoryGUI" name="importCatagoryGUI1">
+        <Component class="org.nam16tuoimatem.gui.Import.ImportCategoryGUI" name="importCategoryGUI1">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Import Category">

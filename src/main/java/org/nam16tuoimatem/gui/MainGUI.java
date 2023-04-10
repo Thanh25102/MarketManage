@@ -30,7 +30,7 @@ public class MainGUI extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         orderGUI1 = new org.nam16tuoimatem.gui.Order.OrderGUI();
         importVegetableGUI1 = new org.nam16tuoimatem.gui.Import.ImportVegetableGUI();
-        importCatagoryGUI1 = new org.nam16tuoimatem.gui.Import.ImportCatagoryGUI();
+        importCategoryGUI1 = new org.nam16tuoimatem.gui.Import.ImportCategoryGUI();
         managerCustomerGUI1 = new org.nam16tuoimatem.gui.Customer.ManagerCustomerGUI();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -41,7 +41,7 @@ public class MainGUI extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Order", orderGUI1);
         jTabbedPane1.addTab("Import Vegetable", importVegetableGUI1);
-        jTabbedPane1.addTab("Import Category", importCatagoryGUI1);
+        jTabbedPane1.addTab("Import Category", importCategoryGUI1);
         jTabbedPane1.addTab("Manager Customer", managerCustomerGUI1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -104,7 +104,7 @@ public class MainGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.nam16tuoimatem.gui.Import.ImportCatagoryGUI importCatagoryGUI1;
+    private org.nam16tuoimatem.gui.Import.ImportCategoryGUI importCategoryGUI1;
     private org.nam16tuoimatem.gui.Import.ImportVegetableGUI importVegetableGUI1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTabbedPane jTabbedPane1;

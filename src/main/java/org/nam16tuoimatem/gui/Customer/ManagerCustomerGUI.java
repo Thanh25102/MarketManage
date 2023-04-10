@@ -6,10 +6,10 @@ package org.nam16tuoimatem.gui.Customer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 import org.nam16tuoimatem.entity.Customers;
 import org.nam16tuoimatem.gui.tablemodel.BaseTable;
-import org.nam16tuoimatem.model.SearchByFields;
+
 import org.nam16tuoimatem.model.SearchMap;
 import org.nam16tuoimatem.services.CustomerService;
 import org.nam16tuoimatem.utils.NotificationUtil;
@@ -339,22 +339,25 @@ public class ManagerCustomerGUI extends javax.swing.JPanel {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
-        
+
         List<SearchMap> search = new ArrayList<>();
-        
-        if(!txtFullName.getText().equals("")) 
-            search.add( new SearchMap("fullname", txtFullName.getText()));
-        
-        if(!txtAddress.getText().equals(""))
-            search.add( new SearchMap("address", txtAddress.getText()));
-        
-         if(!txtCity.getText().equals(""))
-            search.add( new SearchMap("city", txtCity.getText()));
-        
+
+        if (!txtFullName.getText().equals("")) {
+            search.add(new SearchMap("fullname", txtFullName.getText()));
+        }
+
+        if (!txtAddress.getText().equals("")) {
+            search.add(new SearchMap("address", txtAddress.getText()));
+        }
+
+        if (!txtCity.getText().equals("")) {
+            search.add(new SearchMap("city", txtCity.getText()));
+        }
+
         list = CustomerService.getInstance().findByFields(search);
-        
+
         reloadTable();
-        
+
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void tableCustomerMouseClicked(java.awt.event.MouseEvent evt) {
