@@ -15,7 +15,7 @@ public class Vegetable {
     @Column(name = "VegetableID", nullable = false)
     private Integer vegetableId;
     @Basic
-    @Column(name = "Vegetable_Name", nullable = true, length = 50)
+    @Column(name = "VegetableName", nullable = true, length = 50)
     private String vegetableName;
     @Basic
     @Column(name = "Unit", nullable = false, length = 20)
@@ -29,6 +29,7 @@ public class Vegetable {
     @Basic
     @Column(name = "Price", nullable = false, precision = 0)
     private Double price;
+    
     @ManyToOne
     @JoinColumn(name = "CatagoryID", referencedColumnName = "CatagoryID", nullable = false)
     private Category categoryByCategoryId;

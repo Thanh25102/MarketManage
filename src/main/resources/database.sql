@@ -124,12 +124,11 @@ CREATE TABLE `Vegetable`
 (
     `VegetableID`    int(11)     NOT NULL primary key auto_increment,
     `CatagoryID`     int(10)     NOT NULL,
-    `Vegetable_Name` varchar(50) DEFAULT NULL,
+    `VegetableName` varchar(50) DEFAULT NULL,
     `Unit`           varchar(20) NOT NULL,
     `Amount`         int(10)     NOT NULL,
     `Image`          varchar(50) NOT NULL,
-    `Price`          float       NOT NULL,
-    `CustomerID`     int(11)     NOT NULL
+    `Price`          float       NOT NULL
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
@@ -149,7 +148,7 @@ INSERT INTO `Category` (`CatagoryID`, `Name`, `Description`)
 VALUES (1, 'Fruit', 'The kind that can be eaten without cooking'),
        (2, 'Green Vegetables', 'The kind used to make salads or soups'),
        (3, 'Spices', 'The kind used to enhance the taste of food');
-INSERT INTO `Vegetable` (`CatagoryID`, `Vegetable_Name`, `Unit`, `Amount`, `Image`, `Price`)
+INSERT INTO `Vegetable` (`CatagoryID`, `VegetableName`, `Unit`, `Amount`, `Image`, `Price`)
 VALUES (1, 'Tomato', 'kg', 100, 'images/tomato.jpg', 30000),
        (1, 'potato', 'kg', 150, 'images/potato.jpg', 35000),
        (1, 'Apple', 'bag', 50, 'images/apple.jpg', 150000),
