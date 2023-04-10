@@ -1,10 +1,12 @@
 package org.nam16tuoimatem.services;
 
+import org.nam16tuoimatem.Record.VegetableRecord;
 import org.nam16tuoimatem.dao.VegetableRepo;
 import org.nam16tuoimatem.entity.Vegetable;
 import org.nam16tuoimatem.model.SearchMap;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class VegetableService extends ParentService<Vegetable> {
     private static VegetableService instance;
@@ -20,8 +22,9 @@ public class VegetableService extends ParentService<Vegetable> {
         return instance;
     }
 
-    public List<Vegetable> findAll() {
-        return (List<Vegetable>) transaction.doInTransaction(vegetableRepo::findAll);
+    public List<VegetableRecord> findAll() {
+        List<Vegetable> vegetables = (List<Vegetable>) transaction.doInTransaction(vegetableRepo::findAll);
+        return vegetables.stream().map(v -> new VegetableRecord(v.getVegetableId(), v.getVegetableName(), v.getUnit(), v.getAmount(), v.getImage(), v.getPrice())).collect(Collectors.toList());
     }
 
     public Vegetable findOne(Integer id) {
@@ -33,9 +36,9 @@ public class VegetableService extends ParentService<Vegetable> {
     }
 
     public Double totalMoney() {
-        List<Vegetable> vegetables = findAll();
+        List<VegetableRecord> vegetables = findAll();
         return vegetables.stream()
-                .mapToDouble(vegetable -> vegetable.getPrice() * vegetable.getAmount())
+                .mapToDouble(vegetable -> vegetable.price() * vegetable.amount())
                 .sum();
     }
 

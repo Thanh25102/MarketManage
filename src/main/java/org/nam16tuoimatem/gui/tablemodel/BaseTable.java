@@ -14,16 +14,14 @@ public class BaseTable<T> extends AbstractTableModel {
     private final Class<T> clazz;
 
     public void setData(List<T> data) {
-        if(data != null)
-        this.data = data;
-        else this.data = new ArrayList<>();
+        this.data = data != null ? data : new ArrayList<>();
     }
 
     private Field[] fields;
 
     private final Field[] ignoreFields;
 
-    public BaseTable(List<T> data,Class clazz, Field... fieldIgnores) {
+    public BaseTable(List<T> data, Class clazz, Field... fieldIgnores) {
         this.clazz = clazz;
         this.ignoreFields = fieldIgnores;
         this.data = data;
