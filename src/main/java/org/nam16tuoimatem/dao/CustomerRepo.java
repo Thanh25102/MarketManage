@@ -18,25 +18,22 @@ public class CustomerRepo extends BaseRepo<Customers> implements CrudRepository<
 
     @Override
     public List<Customers> findAll() {
-        return factory.getCurrentSession().createQuery("FROM Customers").getResultList();
+        return super.findAll();
     }
 
     @Override
     public Customers findOne(Integer id) {
-        return factory.getCurrentSession().get(Customers.class, id);
+        return findById(id);
     }
 
     @Override
     public Customers saveOrUpdate(Customers customers) {
-        return factory.getCurrentSession().merge(customers);
+        return super.saveOrUpdate(customers);
     }
 
     @Override
     public void delete(Integer id) {
-
-        Customers customers = new Customers();
-        customers.setCustomerId(id);
-        factory.getCurrentSession().remove(customers);
-
+        factory.getCurrentSession().createQuery("delete from Customers c WHERE c.id = :i")
+                .setParameter("i",id).executeUpdate();
     }
 }

@@ -18,20 +18,18 @@ public class CategoryRepo extends BaseRepo<Category> implements CrudRepository<C
 
     @Override
     public List<Category> findAll() {
-        return factory.getCurrentSession()
-                .createQuery("FROM Category").
-                getResultList();
+        return super.findAll();
     }
 
 
     @Override
     public Category findOne(Integer id) {
-        return factory.getCurrentSession().get(Category.class, id);
+        return findById(id);
     }
 
     @Override
     public Category saveOrUpdate(Category category) {
-        return factory.getCurrentSession().merge(category);
+        return super.saveOrUpdate(category);
     }
 
     @Override

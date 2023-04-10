@@ -18,18 +18,17 @@ public class VegetableRepo extends BaseRepo<Vegetable> implements CrudRepository
 
     @Override
     public List<Vegetable> findAll() {
-        return factory.getCurrentSession().createQuery("FROM Vegetable")
-                .getResultList();
+        return super.findAll();
     }
 
     @Override
     public Vegetable findOne(Integer id) {
-        return factory.getCurrentSession().get(Vegetable.class, id);
+        return super.findById(id);
     }
 
     @Override
     public Vegetable saveOrUpdate(Vegetable vegetable) {
-        return factory.getCurrentSession().merge(vegetable);
+        return super.saveOrUpdate(vegetable);
     }
 
     @Override
