@@ -5,7 +5,6 @@ import org.nam16tuoimatem.entity.Customers;
 import org.nam16tuoimatem.model.SearchMap;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CustomerService extends ParentService<Customers> {
 
@@ -24,7 +23,7 @@ public class CustomerService extends ParentService<Customers> {
     }
 
     public List<Customers> findAll() {
-        return (List<Customers>) transaction.doInTransaction(() -> customerRepo.findAll());
+        return (List<Customers>) transaction.doInTransaction(customerRepo::findAll);
     }
 
     public Customers findOne(Integer id) {
@@ -32,7 +31,7 @@ public class CustomerService extends ParentService<Customers> {
     }
 
     public List<Customers> findByFields(List<SearchMap> searchMap) {
-        return transaction.doInTransaction(() -> customerRepo.findByFields(searchMap)).stream().collect(Collectors.toList());
+        return (List<Customers>) transaction.doInTransaction(() -> customerRepo.findByFields(searchMap));
     }
 
     public Customers saveOrUpdate(Customers customers) {

@@ -6,20 +6,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Customers {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "CustomerID", nullable = false)
     private Integer customerId;
+    @Basic
     @Column(name = "Password", nullable = false, length = 20)
     private String password;
+    @Basic
     @Column(name = "Fullname", nullable = false, length = 40)
-    private String fullName;
+    private String fullname;
+    @Basic
     @Column(name = "Address", nullable = true, length = 50)
     private String address;
+    @Basic
     @Column(name = "City", nullable = true, length = 20)
     private String city;
 }

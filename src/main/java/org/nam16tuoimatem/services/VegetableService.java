@@ -5,7 +5,6 @@ import org.nam16tuoimatem.entity.Vegetable;
 import org.nam16tuoimatem.model.SearchMap;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class VegetableService extends ParentService<Vegetable> {
     private static VegetableService instance;
@@ -22,7 +21,7 @@ public class VegetableService extends ParentService<Vegetable> {
     }
 
     public List<Vegetable> findAll() {
-        return (List<Vegetable>) transaction.doInTransaction(() -> vegetableRepo.findAll());
+        return (List<Vegetable>) transaction.doInTransaction(vegetableRepo::findAll);
     }
 
     public Vegetable findOne(Integer id) {
@@ -30,7 +29,7 @@ public class VegetableService extends ParentService<Vegetable> {
     }
 
     public List<Vegetable> findByFields(List<SearchMap> searchMap) {
-        return transaction.doInTransaction(() -> vegetableRepo.findByFields(searchMap)).stream().collect(Collectors.toList());
+        return (List<Vegetable>) transaction.doInTransaction(() -> vegetableRepo.findByFields(searchMap));
     }
 
     public Double totalMoney() {
@@ -39,10 +38,12 @@ public class VegetableService extends ParentService<Vegetable> {
                 .mapToDouble(vegetable -> vegetable.getPrice() * vegetable.getAmount())
                 .sum();
     }
+
     public Vegetable saveOrUpdate(Vegetable vegetable) {
         return transaction.doInTransaction(() -> vegetableRepo.saveOrUpdate(vegetable));
     }
+
     public void delete(Integer id) {
-        transaction.doInTransaction(() ->  vegetableRepo.delete(id));
+        transaction.doInTransaction(() -> vegetableRepo.delete(id));
     }
 }

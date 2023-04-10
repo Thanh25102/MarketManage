@@ -11,7 +11,6 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT = @@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS = @@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION = @@COLLATION_CONNECTION */;
@@ -164,7 +163,8 @@ CREATE TABLE `Vegetable`
     `Unit`           varchar(20) NOT NULL,
     `Amount`         int(10)     NOT NULL,
     `Image`          varchar(50) NOT NULL,
-    `Price`          float       NOT NULL
+    `Price`          float       NOT NULL,
+    `CustomerID`     int(11)     NOT NULL
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
@@ -191,6 +191,7 @@ VALUES (1, 1, 'Tomato', 'kg', 100, 'images/tomato.jpg', 30000),
 --
 ALTER TABLE `Category`
     ADD PRIMARY KEY (`CatagoryID`);
+
 
 --
 -- Chỉ mục cho bảng `Customers`
@@ -236,6 +237,16 @@ ALTER TABLE `Customers`
 ALTER TABLE `Vegetable`
     MODIFY `VegetableID` int(11) NOT NULL AUTO_INCREMENT,
     AUTO_INCREMENT = 9;
+
+alter table `Vegetable`
+    add constraint fk_1 foreign key (CatagoryID) references `Category` (CatagoryID);
+alter table `Order`
+    add constraint fk_2 foreign key (CustomerID) references `Customers` (CustomerID);
+alter table `OrderDetail`
+    add constraint fk_3 foreign key (OrderID) references `Order` (OrderID);
+alter table `OrderDetail`
+    add constraint fk_4 foreign key (VegetableID) references `Vegetable` (VegetableID);
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT = @OLD_CHARACTER_SET_CLIENT */;

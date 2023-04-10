@@ -18,7 +18,7 @@ public class VegetableRepo extends BaseRepo<Vegetable> implements CrudRepository
 
     @Override
     public List<Vegetable> findAll() {
-        return  factory.getCurrentSession().createQuery("FROM Vegetable")
+        return factory.getCurrentSession().createQuery("FROM Vegetable")
                 .getResultList();
     }
 
@@ -34,7 +34,8 @@ public class VegetableRepo extends BaseRepo<Vegetable> implements CrudRepository
 
     @Override
     public void delete(Integer id) {
-        factory.getCurrentSession().createQuery("delete from Vegetable where id =: i")
-                .setParameter("i", id).executeUpdate();
+        Vegetable vegetable = new Vegetable();
+        vegetable.setVegetableId(id);
+        factory.getCurrentSession().remove(vegetable);
     }
 }
