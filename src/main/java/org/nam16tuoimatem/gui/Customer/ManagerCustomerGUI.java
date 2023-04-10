@@ -5,20 +5,22 @@
 package org.nam16tuoimatem.gui.Customer;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import org.nam16tuoimatem.entity.Customers;
 import org.nam16tuoimatem.gui.Import.*;
 import org.nam16tuoimatem.gui.tablemodel.BaseTable;
 import org.nam16tuoimatem.services.CustomerService;
+import org.nam16tuoimatem.utils.NotificationUtil;
 
 /**
  *
  * @author popu
  */
 public class ManagerCustomerGUI extends javax.swing.JPanel {
-    
+
     private List<Customers> list;
     private BaseTable model;
-    
+
     /**
      * Creates new form ImportCatagoryGUI
      */
@@ -26,12 +28,26 @@ public class ManagerCustomerGUI extends javax.swing.JPanel {
         initComponents();
         initTable();
     }
-    
+
     private void initTable() {
         list = CustomerService.getInstance().findAll();
         list.forEach(c -> System.out.println(c));
-        model = new BaseTable<>(list,Customers.class);
+        model = new BaseTable<>(list, Customers.class);
         tableCustomer.setModel(model);
+    }
+
+    private void reloadTable() {
+        model.setData(list);
+        model.fireTableDataChanged();
+    }
+
+
+    private void resetForm() {
+        txtAddress.setText("");
+        txtCity.setText("");
+        txtFullName.setText("");
+        txtPassword.setText("");
+
     }
 
     /**
@@ -260,6 +276,21 @@ public class ManagerCustomerGUI extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
+        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to add ?");
+        if (choice == NotificationUtil.NO) {
+            return;
+        }
+
+        Customers instructor = new Customers();
+        instructor.setAddress(txtAddress.getText());
+        instructor.setCity(txtCity.getText());
+        instructor.setFullName(txtFullName.getText());
+        instructor.setPassword(txtPassword.getText());
+       
+
+        list.add(CustomerService.getInstance().saveOrUpdate(instructor));
+        reloadTable();
+        resetForm();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
