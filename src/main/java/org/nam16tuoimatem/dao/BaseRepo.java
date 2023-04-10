@@ -20,6 +20,16 @@ class BaseRepo<T> {
         factory = HibernateInitialize.factory;
     }
 
+    public T findById(Integer id) {
+        return factory.getCurrentSession().get(type, id);
+    }
+    public List<T> findAll() {
+        Session session = factory.getCurrentSession();
+        CriteriaQuery<T> query = getCriteriaQuery(factory.getCurrentSession());
+        query.select(getRoot(session));
+        return session.createQuery(query).getResultList();
+    }
+
     public List<T> findByFields(List<SearchMap> searchMap) {
         Session session = factory.getCurrentSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -37,6 +47,10 @@ class BaseRepo<T> {
 
         TypedQuery<T> query = session.createQuery(criteria);
         return query.getResultList();
+    }
+
+    public T saveOrUpdate(T data) {
+        return factory.getCurrentSession().merge(data);
     }
 
     protected CriteriaQuery<T> getCriteriaQuery(Session session) {
