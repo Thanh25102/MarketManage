@@ -20,7 +20,7 @@ class BaseRepo<T> {
         factory = HibernateInitialize.factory;
     }
 
-    public List<T> findByFields( List<SearchMap> searchMap) {
+    public List<T> findByFields(List<SearchMap> searchMap) {
         Session session = factory.getCurrentSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<T> criteria = getCriteriaQuery(session);

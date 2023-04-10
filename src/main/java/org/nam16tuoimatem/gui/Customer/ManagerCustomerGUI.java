@@ -282,7 +282,7 @@ public class ManagerCustomerGUI extends javax.swing.JPanel {
         Customers instructor = new Customers();
         instructor.setAddress(txtAddress.getText());
         instructor.setCity(txtCity.getText());
-        instructor.setFullName(txtFullName.getText());
+        instructor.setFullname(txtFullName.getText());
         instructor.setPassword(txtPassword.getText());
 
         list.add(CustomerService.getInstance().saveOrUpdate(instructor));
@@ -303,7 +303,7 @@ public class ManagerCustomerGUI extends javax.swing.JPanel {
             Customers instructor = CustomerService.getInstance().findOne(id);
             instructor.setAddress(txtAddress.getText());
             instructor.setCity(txtCity.getText());
-            instructor.setFullName(txtFullName.getText());
+            instructor.setFullname(txtFullName.getText());
             instructor.setPassword(txtPassword.getText());
 
             CustomerService.getInstance().saveOrUpdate(instructor);
@@ -338,7 +338,7 @@ public class ManagerCustomerGUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void tableCustomerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCustomerMouseClicked
+    private void tableCustomerMouseClicked(java.awt.event.MouseEvent evt) {                                           
         // TODO add your handling code here:
         Integer selected = tableCustomer.getSelectedRow();
         if (selected >= 0) {
@@ -348,13 +348,13 @@ public class ManagerCustomerGUI extends javax.swing.JPanel {
                     txtAddress.setText(item.getAddress());
                     txtCity.setText(item.getCity());
                     txtPassword.setText(item.getPassword());
-                    txtFullName.setText(item.getFullName());
+                    txtFullName.setText(item.getFullname());
                 }
             });
 
         }
-        //GEN-LAST:event_tableIntruc
-    }//GEN-LAST:event_tableCustomerMouseClicked
+                                    
+    }                                          
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

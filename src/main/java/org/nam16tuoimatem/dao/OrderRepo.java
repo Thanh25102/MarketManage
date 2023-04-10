@@ -25,7 +25,7 @@ public class OrderRepo extends BaseRepo<Order> implements CrudRepository<Order> 
 
     @Override
     public Order findOne(Integer id) {
-        return null;
+        return factory.getCurrentSession().get(Order.class, id);
     }
 
     @Override
@@ -35,6 +35,8 @@ public class OrderRepo extends BaseRepo<Order> implements CrudRepository<Order> 
 
     @Override
     public void delete(Integer id) {
-
+        Order order = new Order();
+        order.setOrderId(id);
+        factory.getCurrentSession().remove(order);
     }
 }

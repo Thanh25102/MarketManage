@@ -6,19 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.Collection;
 
 @Entity
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "OrderID", nullable = false)
     private Integer orderId;
-    @Basic
-    @Column(name = "CustomerID", nullable = false)
-    private Integer customerId;
     @Basic
     @Column(name = "Date", nullable = false)
     private Date date;
@@ -28,4 +26,9 @@ public class Order {
     @Basic
     @Column(name = "Note", nullable = false, length = -1)
     private String note;
+    @ManyToOne
+    @JoinColumn(name = "CustomerID", referencedColumnName = "CustomerID", nullable = false)
+    private Customers customersByCustomerId;
+    @OneToMany(mappedBy = "orderDetailsByOrderId")
+    private Collection<OrderDetail> orderDetailsByOrderId;
 }

@@ -18,8 +18,11 @@ public class CategoryRepo extends BaseRepo<Category> implements CrudRepository<C
 
     @Override
     public List<Category> findAll() {
-        return factory.getCurrentSession().createQuery("FROM Category").getResultList();
+        return factory.getCurrentSession()
+                .createQuery("FROM Category").
+                getResultList();
     }
+
 
     @Override
     public Category findOne(Integer id) {
@@ -27,12 +30,14 @@ public class CategoryRepo extends BaseRepo<Category> implements CrudRepository<C
     }
 
     @Override
-    public Category saveOrUpdate(Category data) {
-        return null;
+    public Category saveOrUpdate(Category category) {
+        return factory.getCurrentSession().merge(category);
     }
 
     @Override
     public void delete(Integer id) {
-
+        Category category = new Category();
+        category.setCategoryId(id);
+        factory.getCurrentSession().remove(category);
     }
 }

@@ -1,12 +1,10 @@
 package org.nam16tuoimatem.services;
 
-import org.hibernate.Session;
 import org.nam16tuoimatem.dao.CategoryRepo;
 import org.nam16tuoimatem.entity.Category;
 import org.nam16tuoimatem.model.SearchMap;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CategoryService extends ParentService<Category> {
     private static CategoryService instance;
@@ -27,7 +25,7 @@ public class CategoryService extends ParentService<Category> {
     }
 
     public List<Category> findByFields(List<SearchMap> searchMap) {
-        return transaction.doInTransaction(() -> categoryRepo.findByFields(searchMap)).stream().collect(Collectors.toList());
+        return (List<Category>) transaction.doInTransaction(() -> categoryRepo.findByFields(searchMap));
     }
 
     public List<Category> findAll() {
