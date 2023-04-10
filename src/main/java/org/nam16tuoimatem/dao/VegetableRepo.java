@@ -15,26 +15,4 @@ public class VegetableRepo extends BaseRepo<Vegetable> implements CrudRepository
         if (instance == null) instance = new VegetableRepo();
         return instance;
     }
-
-    @Override
-    public List<Vegetable> findAll() {
-        return super.findAll();
-    }
-
-    @Override
-    public Vegetable findOne(Integer id) {
-        return super.findById(id);
-    }
-
-    @Override
-    public Vegetable saveOrUpdate(Vegetable vegetable) {
-        return super.saveOrUpdate(vegetable);
-    }
-
-    @Override
-    public void delete(Integer id) {
-        Vegetable vegetable = new Vegetable();
-        vegetable.setVegetableId(id);
-        factory.getCurrentSession().remove(vegetable);
-    }
 }
