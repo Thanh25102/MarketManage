@@ -4,7 +4,6 @@
  */
 package org.nam16tuoimatem.gui.Import;
 
-
 import java.lang.reflect.Field;
 import java.util.List;
 import org.nam16tuoimatem.entity.Category;
@@ -16,7 +15,6 @@ import org.nam16tuoimatem.services.CategoryService;
 import org.nam16tuoimatem.services.VegetableService;
 import org.nam16tuoimatem.utils.NotificationUtil;
 import org.nam16tuoimatem.Record.VegetableRecord;
-
 
 /**
  *
@@ -36,19 +34,18 @@ public class ImportVegetableGUI extends javax.swing.JPanel {
     }
 
     private void initTable() {
-      
-            list = VegetableService.getInstance().findAll();
-            model = new BaseTable<>(list, VegetableRecord.class);
-            tableVegetable.setModel(model);
-    
 
-//        cbCategory.removeAll();
-//         cbCategory.setRenderer(new ItemRenderer());
-//         cbCategory.addItem(new Item(null, "### CATEGORY NAME ###"));
-//         
-//         CategoryService.getInstance().findAll().forEach(instructor
-//                        -> cbCategory.addItem(new Item(instructor.getCategoryId(), 
-//                                instructor.getName())));
+        list = VegetableService.getInstance().findAll();
+        model = new BaseTable<>(list, VegetableRecord.class);
+        tableVegetable.setModel(model);
+
+        cbCategory.removeAll();
+        cbCategory.setRenderer(new ItemRenderer());
+        cbCategory.addItem(new Item(null, "### CATEGORY NAME ###"));
+
+        CategoryService.getInstance().findAll().forEach(instructor
+                -> cbCategory.addItem(new Item(instructor.getCategoryId(),
+                        instructor.getName())));
     }
 
     private void reloadTable() {
@@ -353,52 +350,94 @@ public class ImportVegetableGUI extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(42, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void tableVegetableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableVegetableMouseClicked
         // TODO add your handling code here:
+        Integer selected = tableVegetable.getSelectedRow();
+        if (selected >= 0) {
+            int id = (int) tableVegetable.getValueAt(selected, 0);
+            list.stream().forEach(item -> {
+                if (item.vegetableId() == id) {
+                    txtVegetableName.setText(item.vegetableName());
+                    txtUnit.setText(item.unit());
+                    spAmount.setValue(item.amount());
+                    spPrice.setValue(item.price());
+                    txtImage.setText(item.image());
+
+                    Item itemTemp;
+
+                    for (int i = 0; i < cbCategory.getItemCount(); i++) {
+                        itemTemp = (Item) cbCategory.getItemAt(i);
+                        if (itemTemp.getValue().equals(item.categoryName())) {
+                            cbCategory.setSelectedIndex(i);
+                            break;
+                        }
+                    }
+                }
+            });
+
+        }
     }//GEN-LAST:event_tableVegetableMouseClicked
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-//        // TODO add your handling code here:
-//        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to add ?");
-//        if (choice == NotificationUtil.NO) {
-//            return;
-//        }
-//
-//        Category instructor = new Category();
-//
-//        instructor.setName(txtCategoryName.getText());
-//        instructor.setDescription(txtDescription.getText());
-//
-//        list.add(CategoryService.getInstance().saveOrUpdate(instructor));
-//        reloadTable();
-//        resetForm();
+        // TODO add your handling code here:
+        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to add ?");
+        if (choice == NotificationUtil.NO) {
+            return;
+        }
+
+        Vegetable instructor = new Vegetable();
+
+        instructor.setVegetableName(txtVegetableName.getText());
+        instructor.setUnit(txtUnit.getText());
+        instructor.setAmount((int) spAmount.getValue());
+        instructor.setPrice((Double) spPrice.getValue());
+        instructor.setImage(txtImage.getText());
+
+        int categoryId = ((Item) cbCategory.getSelectedItem()).getId();
+        Category category = CategoryService.getInstance().findOne(categoryId);
+
+        instructor.setCategoryByCategoryId(category);
+
+        VegetableService.getInstance().saveOrUpdate(instructor);
+
+        initTable();
+        resetForm();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-//        // TODO add your handling code here:
-//        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to update");
-//        if (choice == NotificationUtil.NO) {
-//            return;
-//        }
-//
-//        Integer selected = tableCategory.getSelectedRow();
-//        if (selected >= 0) {
-//            int id = (int) tableCategory.getValueAt(selected, 0);
-//            Category instructor = CategoryService.getInstance().findOne(id);
-//
-//            instructor.setName(txtCategoryName.getText());
-//            instructor.setDescription(txtDescription.getText());
-//
-//            CategoryService.getInstance().saveOrUpdate(instructor);
-//
-//            initTable();
-//            resetForm();
-//        }
+        // TODO add your handling code here:
+        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to update");
+        if (choice == NotificationUtil.NO) {
+            return;
+        }
+
+        Integer selected = tableVegetable.getSelectedRow();
+        if (selected >= 0) {
+            int id = (int) tableVegetable.getValueAt(selected, 0);
+            Vegetable instructor = VegetableService.getInstance().findOne(id);
+
+            instructor.setVegetableName(txtVegetableName.getText());
+            instructor.setUnit(txtUnit.getText());
+            instructor.setAmount((int) spAmount.getValue());
+            instructor.setPrice((Double) spPrice.getValue());
+            instructor.setImage(txtImage.getText());
+
+            int categoryId = ((Item) cbCategory.getSelectedItem()).getId();
+            Category category = CategoryService.getInstance().findOne(categoryId);
+
+            instructor.setCategoryByCategoryId(category);
+
+            VegetableService.getInstance().saveOrUpdate(instructor);
+
+            initTable();
+            resetForm();
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
