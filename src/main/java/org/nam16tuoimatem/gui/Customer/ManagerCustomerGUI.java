@@ -4,19 +4,34 @@
  */
 package org.nam16tuoimatem.gui.Customer;
 
+import java.util.List;
+import org.nam16tuoimatem.entity.Customers;
 import org.nam16tuoimatem.gui.Import.*;
+import org.nam16tuoimatem.gui.tablemodel.BaseTable;
+import org.nam16tuoimatem.services.CustomerService;
 
 /**
  *
  * @author popu
  */
 public class ManagerCustomerGUI extends javax.swing.JPanel {
-
+    
+    private List<Customers> list;
+    private BaseTable model;
+    
     /**
      * Creates new form ImportCatagoryGUI
      */
     public ManagerCustomerGUI() {
         initComponents();
+        initTable();
+    }
+    
+    private void initTable() {
+        list = CustomerService.getInstance().findAll();
+        list.forEach(c -> System.out.println(c));
+        model = new BaseTable<>(list,Customers.class);
+        tableCustomer.setModel(model);
     }
 
     /**
