@@ -5,20 +5,21 @@
 package org.nam16tuoimatem.gui.Customer;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import org.nam16tuoimatem.entity.Customers;
-import org.nam16tuoimatem.gui.Import.*;
 import org.nam16tuoimatem.gui.tablemodel.BaseTable;
 import org.nam16tuoimatem.services.CustomerService;
+import org.nam16tuoimatem.utils.NotificationUtil;
 
 /**
  *
  * @author popu
  */
 public class ManagerCustomerGUI extends javax.swing.JPanel {
-    
+
     private List<Customers> list;
     private BaseTable model;
-    
+
     /**
      * Creates new form ImportCatagoryGUI
      */
@@ -26,12 +27,25 @@ public class ManagerCustomerGUI extends javax.swing.JPanel {
         initComponents();
         initTable();
     }
-    
+
     private void initTable() {
         list = CustomerService.getInstance().findAll();
         list.forEach(c -> System.out.println(c));
-        model = new BaseTable<>(list,Customers.class);
+        model = new BaseTable<>(list, Customers.class);
         tableCustomer.setModel(model);
+    }
+
+    private void reloadTable() {
+        model.setData(list);
+        model.fireTableDataChanged();
+    }
+
+    private void resetForm() {
+        txtAddress.setText("");
+        txtCity.setText("");
+        txtFullName.setText("");
+        txtPassword.setText("");
+
     }
 
     /**
@@ -260,27 +274,87 @@ public class ManagerCustomerGUI extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
+        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to add ?");
+        if (choice == NotificationUtil.NO) {
+            return;
+        }
+
+        Customers instructor = new Customers();
+        instructor.setAddress(txtAddress.getText());
+        instructor.setCity(txtCity.getText());
+        instructor.setFullname(txtFullName.getText());
+        instructor.setPassword(txtPassword.getText());
+
+        list.add(CustomerService.getInstance().saveOrUpdate(instructor));
+        reloadTable();
+        resetForm();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
+        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to update");
+        if (choice == NotificationUtil.NO) {
+            return;
+        }
+
+        Integer selected = tableCustomer.getSelectedRow();
+        if (selected >= 0) {
+            int id = (int) tableCustomer.getValueAt(selected, 0);
+            Customers instructor = CustomerService.getInstance().findOne(id);
+            instructor.setAddress(txtAddress.getText());
+            instructor.setCity(txtCity.getText());
+            instructor.setFullname(txtFullName.getText());
+            instructor.setPassword(txtPassword.getText());
+
+            CustomerService.getInstance().saveOrUpdate(instructor);
+
+            initTable();
+            resetForm();
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
+        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to delete");
+        if (choice == NotificationUtil.NO) {
+            return;
+        }
+        Integer selected = tableCustomer.getSelectedRow();
+        if (selected >= 0) {
+            int id = (int) tableCustomer.getValueAt(selected, 0);
+            CustomerService.getInstance().delete(id);
+            initTable();
+            resetForm();
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         // TODO add your handling code here:
+        resetForm();
+        initTable();
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void tableCustomerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCustomerMouseClicked
+    private void tableCustomerMouseClicked(java.awt.event.MouseEvent evt) {                                           
         // TODO add your handling code here:
-    }//GEN-LAST:event_tableCustomerMouseClicked
+        Integer selected = tableCustomer.getSelectedRow();
+        if (selected >= 0) {
+            int id = (int) tableCustomer.getValueAt(selected, 0);
+            list.stream().forEach(item -> {
+                if (item.getCustomerId() == id) {
+                    txtAddress.setText(item.getAddress());
+                    txtCity.setText(item.getCity());
+                    txtPassword.setText(item.getPassword());
+                    txtFullName.setText(item.getFullname());
+                }
+            });
+
+        }
+                                    
+    }                                          
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
