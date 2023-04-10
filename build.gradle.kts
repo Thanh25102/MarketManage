@@ -13,6 +13,10 @@ dependencies {
     implementation("org.hibernate:hibernate-core:6.1.7.Final")
     implementation("com.mysql:mysql-connector-j:8.0.32")
 
+
+    implementation ("org.apache.commons:commons-text:1.10.0")
+
+
     implementation("org.apache.logging.log4j:log4j-core:2.20.0")
     implementation("org.slf4j:slf4j-api:2.0.6")
     implementation("org.slf4j:slf4j-simple:2.0.6")
