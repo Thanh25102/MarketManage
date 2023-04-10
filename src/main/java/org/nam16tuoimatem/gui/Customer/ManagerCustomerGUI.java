@@ -7,7 +7,6 @@ package org.nam16tuoimatem.gui.Customer;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.nam16tuoimatem.entity.Customers;
-import org.nam16tuoimatem.gui.Import.*;
 import org.nam16tuoimatem.gui.tablemodel.BaseTable;
 import org.nam16tuoimatem.services.CustomerService;
 import org.nam16tuoimatem.utils.NotificationUtil;
@@ -40,7 +39,6 @@ public class ManagerCustomerGUI extends javax.swing.JPanel {
         model.setData(list);
         model.fireTableDataChanged();
     }
-
 
     private void resetForm() {
         txtAddress.setText("");
@@ -286,7 +284,6 @@ public class ManagerCustomerGUI extends javax.swing.JPanel {
         instructor.setCity(txtCity.getText());
         instructor.setFullName(txtFullName.getText());
         instructor.setPassword(txtPassword.getText());
-       
 
         list.add(CustomerService.getInstance().saveOrUpdate(instructor));
         reloadTable();
@@ -295,14 +292,46 @@ public class ManagerCustomerGUI extends javax.swing.JPanel {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
+        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to update");
+        if (choice == NotificationUtil.NO) {
+            return;
+        }
+
+        Integer selected = tableCustomer.getSelectedRow();
+        if (selected >= 0) {
+            int id = (int) tableCustomer.getValueAt(selected, 0);
+            Customers instructor = CustomerService.getInstance().findOne(id);
+            instructor.setAddress(txtAddress.getText());
+            instructor.setCity(txtCity.getText());
+            instructor.setFullName(txtFullName.getText());
+            instructor.setPassword(txtPassword.getText());
+
+            CustomerService.getInstance().saveOrUpdate(instructor);
+
+            initTable();
+            resetForm();
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
+        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to delete");
+        if (choice == NotificationUtil.NO) {
+            return;
+        }
+        Integer selected = tableCustomer.getSelectedRow();
+        if (selected >= 0) {
+            int id = (int) tableCustomer.getValueAt(selected, 0);
+            CustomerService.getInstance().delete(id);
+            initTable();
+            resetForm();
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         // TODO add your handling code here:
+        resetForm();
+        initTable();
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -311,6 +340,20 @@ public class ManagerCustomerGUI extends javax.swing.JPanel {
 
     private void tableCustomerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCustomerMouseClicked
         // TODO add your handling code here:
+        Integer selected = tableCustomer.getSelectedRow();
+        if (selected >= 0) {
+            int id = (int) tableCustomer.getValueAt(selected, 0);
+            list.stream().forEach(item -> {
+                if (item.getCustomerId() == id) {
+                    txtAddress.setText(item.getAddress());
+                    txtCity.setText(item.getCity());
+                    txtPassword.setText(item.getPassword());
+                    txtFullName.setText(item.getFullName());
+                }
+            });
+
+        }
+        //GEN-LAST:event_tableIntruc
     }//GEN-LAST:event_tableCustomerMouseClicked
 
 

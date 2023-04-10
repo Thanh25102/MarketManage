@@ -33,6 +33,8 @@ public class CustomerRepo extends BaseRepo<Customers> implements CrudRepository<
 
     @Override
     public void delete(Integer id) {
-        factory.getCurrentSession().remove(id);
+        Customers customer = new Customers();
+        customer.setCustomerId(id);
+        factory.getCurrentSession().remove(customer);
     }
 }
