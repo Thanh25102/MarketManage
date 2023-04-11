@@ -10,22 +10,20 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BaseTable<T> extends AbstractTableModel {
-    private List<T> data;
     private final Class<T> clazz;
-
-    public void setData(List<T> data) {
-        this.data = data != null ? data : new ArrayList<>();
-    }
-
-    private Field[] fields;
-
     private final Field[] ignoreFields;
+    private List<T> data;
+    private Field[] fields;
 
     public BaseTable(List<T> data, Class clazz, Field... fieldIgnores) {
         this.clazz = clazz;
         this.ignoreFields = fieldIgnores;
         this.data = data;
         setFields(fieldIgnores);
+    }
+
+    public void setData(List<T> data) {
+        this.data = data != null ? data : new ArrayList<>();
     }
 
     private void setFields(Field... fieldIgnores) {

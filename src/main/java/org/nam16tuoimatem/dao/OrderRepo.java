@@ -2,9 +2,7 @@ package org.nam16tuoimatem.dao;
 
 import org.nam16tuoimatem.entity.Order;
 
-import java.util.List;
-
-public class OrderRepo extends BaseRepo<Order> implements CrudRepository<Order> {
+public class OrderRepo extends BaseRepo<Order> {
     private static OrderRepo instance;
 
     private OrderRepo() {

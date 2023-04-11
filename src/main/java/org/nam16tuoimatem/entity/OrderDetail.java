@@ -20,7 +20,7 @@ public class OrderDetail {
     private Integer vegetableId;
     @Basic
     @Column(name = "Quantity", nullable = false)
-    private Byte quantity;
+    private Integer quantity;
     @Basic
     @Column(name = "Price", nullable = false, precision = 0)
     private Double price;

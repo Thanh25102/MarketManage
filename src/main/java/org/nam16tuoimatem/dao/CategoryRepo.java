@@ -2,9 +2,7 @@ package org.nam16tuoimatem.dao;
 
 import org.nam16tuoimatem.entity.Category;
 
-import java.util.List;
-
-public class CategoryRepo extends BaseRepo<Category> implements CrudRepository<Category> {
+public class CategoryRepo extends BaseRepo<Category> {
     private static CategoryRepo instance;
 
     private CategoryRepo() {
