@@ -53,11 +53,11 @@ public class OrderService extends ParentService<Order> {
     }
 
     public Map<Integer, Double> revenueWithMonth(Date dateForm, Date dateTo) throws DateToInValidException {
-        return revenue(dateForm,dateTo,RevenueType.MONTH);
+        return revenue(dateForm, dateTo, RevenueType.MONTH);
     }
 
     public Map<Integer, Double> revenueWithYear(Date dateForm, Date dateTo) throws DateToInValidException {
-        return revenue(dateForm,dateTo,RevenueType.YEAR);
+        return revenue(dateForm, dateTo, RevenueType.YEAR);
     }
 
     private Map<Integer, Double> revenue(Date dateForm, Date dateTo, RevenueType type) throws DateToInValidException {

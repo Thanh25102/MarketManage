@@ -2,9 +2,7 @@ package org.nam16tuoimatem.dao;
 
 import org.nam16tuoimatem.entity.Vegetable;
 
-import java.util.List;
-
-public class VegetableRepo extends BaseRepo<Vegetable> implements CrudRepository<Vegetable> {
+public class VegetableRepo extends BaseRepo<Vegetable> {
     private static VegetableRepo instance;
 
     private VegetableRepo() {

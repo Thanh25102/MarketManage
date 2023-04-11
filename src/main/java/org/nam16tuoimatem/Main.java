@@ -1,7 +1,6 @@
 package org.nam16tuoimatem;
+
 import org.nam16tuoimatem.gui.MainGUI;
-
-
 
 
 public class Main {

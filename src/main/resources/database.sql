@@ -84,11 +84,11 @@ VALUES (9);
 
 CREATE TABLE `Order`
 (
-    `OrderID`    int(10)   NOT NULL primary key auto_increment,
-    `CustomerID` int(10)          NOT NULL,
-    `Date`       date             NOT NULL,
-    `Total`      float            NOT NULL,
-    `Note`       text             NOT NULL
+    `OrderID`    int(10) NOT NULL primary key auto_increment,
+    `CustomerID` int(10) NOT NULL,
+    `Date`       date    NOT NULL,
+    `Total`      float   NOT NULL,
+    `Note`       text    NOT NULL
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
@@ -101,10 +101,10 @@ CREATE TABLE `Order`
 
 CREATE TABLE `OrderDetail`
 (
-    `OrderID`     int(10)  NOT NULL,
-    `VegetableID` int(10)          NOT NULL,
-    `Quantity`    tinyint(4)       NOT NULL,
-    `Price`       float            NOT NULL,
+    `OrderID`     int(10)    NOT NULL,
+    `VegetableID` int(10)    NOT NULL,
+    `Quantity`    tinyint(4) NOT NULL,
+    `Price`       float      NOT NULL,
     primary key (OrderID, VegetableID)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
