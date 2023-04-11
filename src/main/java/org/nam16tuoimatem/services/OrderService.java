@@ -1,19 +1,24 @@
 package org.nam16tuoimatem.services;
 
+import org.nam16tuoimatem.Record.OrderRecord;
 import org.nam16tuoimatem.dao.OrderRepo;
 import org.nam16tuoimatem.entity.Order;
 import org.nam16tuoimatem.exception.DateToInValidException;
+import org.nam16tuoimatem.mapper.OrderMapper;
 import org.nam16tuoimatem.model.RevenueType;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class OrderService extends ParentService<Order> {
     private static OrderService instance;
     private final OrderRepo orderRepo;
+    private final OrderMapper orderMapper;
 
     private OrderService() {
         super(Order.class);
         orderRepo = OrderRepo.getInstance();
+        orderMapper = OrderMapper.getInstance();
     }
 
     public static OrderService getInstance() {
@@ -21,8 +26,9 @@ public class OrderService extends ParentService<Order> {
         return instance;
     }
 
-    public List<Order> findAll() {
-        return (List<Order>) transaction.doInTransaction(orderRepo::findAll);
+    public List<OrderRecord> findAll() {
+        List<Order> orders = (List<Order>) transaction.doInTransaction(orderRepo::findAll);
+        return orders.stream().map(orderMapper).collect(Collectors.toList());
     }
 
     public Order saveOrUpdate(Order order) {
@@ -30,10 +36,10 @@ public class OrderService extends ParentService<Order> {
     }
 
     public Double revenue(Date dateForm, Date dateTo) {
-        List<Order> orders = findAll();
+        List<OrderRecord> orders = findAll();
         return orders.stream()
-                .filter(order -> order.getDate().after(dateForm) && order.getDate().before(dateTo))
-                .mapToDouble(order -> order.getTotal())
+                .filter(order -> order.date().after(dateForm) && order.date().before(dateTo))
+                .mapToDouble(order -> order.total())
                 .sum();
     }
 
@@ -65,14 +71,14 @@ public class OrderService extends ParentService<Order> {
         Date dateValid = type.compareTo(RevenueType.MONTH) == 0 ? validateDateTo(dateForm, dateTo) : dateTo;
 
         Map<Integer, Double> total = new HashMap<>();
-        List<Order> orders = findAll();
+        List<OrderRecord> orders = findAll();
         orders.stream()
-                .filter(order -> order.getDate().after(dateForm) && order.getDate().before(dateValid))
+                .filter(order -> order.date().after(dateForm) && order.date().before(dateValid))
                 .forEach(order -> {
                     Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(order.getDate());
+                    calendar.setTime(order.date());
                     int calendarType = type.compareTo(RevenueType.MONTH) == 0 ? Calendar.MONTH : Calendar.YEAR;
-                    total.put(calendar.get(calendarType), total.getOrDefault(calendar.get(calendarType), 0D) + order.getTotal());
+                    total.put(calendar.get(calendarType), total.getOrDefault(calendar.get(calendarType), 0D) + order.total());
                 });
         return total;
     }

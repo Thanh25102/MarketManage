@@ -1,19 +1,24 @@
 package org.nam16tuoimatem.services;
 
+import org.nam16tuoimatem.Record.CustomerRecord;
 import org.nam16tuoimatem.dao.CustomerRepo;
 import org.nam16tuoimatem.entity.Customers;
+import org.nam16tuoimatem.mapper.CustomersMapper;
 import org.nam16tuoimatem.model.SearchMap;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CustomerService extends ParentService<Customers> {
 
     private static CustomerService instance;
     private final CustomerRepo customerRepo;
+    private final CustomersMapper customersMapper;
 
     private CustomerService() {
         super(Customers.class);
         customerRepo = CustomerRepo.getInstance();
+        customersMapper= CustomersMapper.getInstance();
     }
 
     public static CustomerService getInstance() {
@@ -22,20 +27,22 @@ public class CustomerService extends ParentService<Customers> {
         return instance;
     }
 
-    public List<Customers> findAll() {
-        return (List<Customers>) transaction.doInTransaction(customerRepo::findAll);
+    public List<CustomerRecord> findAll() {
+        List<Customers> customers= (List<Customers>) transaction.doInTransaction(customerRepo::findAll);
+        return customers.stream().map(customersMapper).collect(Collectors.toList());
     }
 
-    public Customers findOne(Integer id) {
-        return transaction.doInTransaction(() -> customerRepo.findOne(id));
+    public CustomerRecord findOne(Integer id) {
+        return customersMapper.apply(transaction.doInTransaction(() -> customerRepo.findOne(id)));
     }
 
-    public List<Customers> findByFields(List<SearchMap> searchMap) {
-        return (List<Customers>) transaction.doInTransaction(() -> customerRepo.findByFields(searchMap));
+    public List<CustomerRecord> findByFields(List<SearchMap> searchMap) {
+        List<Customers> customers=  (List<Customers>) transaction.doInTransaction(() -> customerRepo.findByFields(searchMap));
+        return customers.stream().map(customersMapper).collect(Collectors.toList());
     }
 
-    public Customers saveOrUpdate(Customers customers) {
-        return transaction.doInTransaction(() -> customerRepo.saveOrUpdate(customers));
+    public CustomerRecord saveOrUpdate(Customers customers) {
+        return customersMapper.apply(transaction.doInTransaction(() -> customerRepo.saveOrUpdate(customers)));
     }
 
     public void delete(Integer id) {

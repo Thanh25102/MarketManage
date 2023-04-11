@@ -3,6 +3,7 @@ package org.nam16tuoimatem.services;
 import org.nam16tuoimatem.Record.VegetableRecord;
 import org.nam16tuoimatem.dao.VegetableRepo;
 import org.nam16tuoimatem.entity.Vegetable;
+import org.nam16tuoimatem.mapper.VegetableMapper;
 import org.nam16tuoimatem.model.SearchMap;
 
 import java.util.List;
@@ -11,10 +12,12 @@ import java.util.stream.Collectors;
 public class VegetableService extends ParentService<Vegetable> {
     private static VegetableService instance;
     private final VegetableRepo vegetableRepo;
+    private final VegetableMapper vegetableMapper;
 
     private VegetableService() {
         super(Vegetable.class);
         vegetableRepo = VegetableRepo.getInstance();
+        vegetableMapper = VegetableMapper.getInstance();
     }
 
     public static VegetableService getInstance() {
@@ -24,15 +27,19 @@ public class VegetableService extends ParentService<Vegetable> {
 
     public List<VegetableRecord> findAll() {
         List<Vegetable> vegetables = (List<Vegetable>) transaction.doInTransaction(vegetableRepo::findAll);
-        return vegetables.stream().map(v -> new VegetableRecord(v.getVegetableId(), v.getVegetableName(), v.getUnit(), v.getAmount(), v.getImage(), v.getPrice(), v.getCategoryByCategoryId().getName())).collect(Collectors.toList());
+        return vegetables.stream().map(vegetableMapper)
+                .collect(Collectors.toList());
     }
 
-    public Vegetable findOne(Integer id) {
-        return transaction.doInTransaction(() -> vegetableRepo.findOne(id));
+    public VegetableRecord findOne(Integer id) {
+        Vegetable vegetable = transaction.doInTransaction(() -> vegetableRepo.findOne(id));
+        return vegetableMapper.apply(vegetable);
     }
 
-    public List<Vegetable> findByFields(List<SearchMap> searchMap) {
-        return (List<Vegetable>) transaction.doInTransaction(() -> vegetableRepo.findByFields(searchMap));
+    public List<VegetableRecord> findByFields(List<SearchMap> searchMap) {
+        List<Vegetable> vegetables = (List<Vegetable>) transaction.doInTransaction(() -> vegetableRepo.findByFields(searchMap));
+        return vegetables.stream().map(vegetableMapper)
+                .collect(Collectors.toList());
     }
 
     public Double totalMoney() {
@@ -42,8 +49,9 @@ public class VegetableService extends ParentService<Vegetable> {
                 .sum();
     }
 
-    public Vegetable saveOrUpdate(Vegetable vegetable) {
-        return transaction.doInTransaction(() -> vegetableRepo.saveOrUpdate(vegetable));
+    public VegetableRecord saveOrUpdate(Vegetable vegetable) {
+        Vegetable vegetableSaved = transaction.doInTransaction(() -> vegetableRepo.saveOrUpdate(vegetable));
+        return vegetableMapper.apply(vegetableSaved);
     }
 
     public void delete(Integer id) {
