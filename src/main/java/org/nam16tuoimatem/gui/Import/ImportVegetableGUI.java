@@ -5,6 +5,7 @@
 package org.nam16tuoimatem.gui.Import;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import org.nam16tuoimatem.entity.Category;
 import org.nam16tuoimatem.entity.Vegetable;
@@ -15,6 +16,7 @@ import org.nam16tuoimatem.services.CategoryService;
 import org.nam16tuoimatem.services.VegetableService;
 import org.nam16tuoimatem.utils.NotificationUtil;
 import org.nam16tuoimatem.Record.VegetableRecord;
+import org.nam16tuoimatem.model.SearchMap;
 
 /**
  *
@@ -60,7 +62,6 @@ public class ImportVegetableGUI extends javax.swing.JPanel {
         cbCategory.setSelectedIndex(0);
         spAmount.setValue(0);
         spPrice.setValue(0);
-
     }
 
     /**
@@ -441,41 +442,45 @@ public class ImportVegetableGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-//        // TODO add your handling code here:
-//        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to delete");
-//        if (choice == NotificationUtil.NO) {
-//            return;
-//        }
-//        Integer selected = tableCategory.getSelectedRow();
-//        if (selected >= 0) {
-//            int id = (int) tableCategory.getValueAt(selected, 0);
-//            CategoryService.getInstance().delete(id);
-//            initTable();
-//            resetForm();
-//        }
+        // TODO add your handling code here:
+        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to delete");
+        if (choice == NotificationUtil.NO) {
+            return;
+        }
+        Integer selected = tableVegetable.getSelectedRow();
+        if (selected >= 0) {
+            int id = (int) tableVegetable.getValueAt(selected, 0);
+            VegetableService.getInstance().delete(id);
+            initTable();
+            resetForm();
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         // TODO add your handling code here:
-//        resetForm();
-//        initTable();
+        resetForm();
+        initTable();
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
-//        List<SearchMap> search = new ArrayList<>();
-//
-//        if (!txtCategoryName.getText().equals("")) {
-//            search.add(new SearchMap("name", txtCategoryName.getText()));
-//        }
-//
-//        if (!txtDescription.getText().equals("")) {
-//            search.add(new SearchMap("description", txtDescription.getText()));
-//        }
-//
-//        list = CategoryService.getInstance().findByFields(search);
-//
-//        reloadTable();
+        List<SearchMap> search = new ArrayList<>();
+
+        if (!txtImage.getText().equals("")) {
+            search.add(new SearchMap("image", txtImage.getText()));
+        }
+
+        if (!txtUnit.getText().equals("")) {
+            search.add(new SearchMap("unit", txtUnit.getText()));
+        }
+        
+        if (!txtVegetableName.getText().equals("")) {
+            search.add(new SearchMap("vegetableName", txtVegetableName.getText()));
+        }
+
+        list = VegetableService.getInstance().findByFields(search);
+
+        reloadTable();
     }//GEN-LAST:event_btnSearchActionPerformed
 
 

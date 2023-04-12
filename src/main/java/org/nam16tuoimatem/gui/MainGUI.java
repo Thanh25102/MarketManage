@@ -27,11 +27,8 @@ public class MainGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        orderGUI1 = new org.nam16tuoimatem.gui.Order.OrderGUI();
-        importVegetableGUI1 = new org.nam16tuoimatem.gui.Import.ImportVegetableGUI();
-        importCategoryGUI1 = new org.nam16tuoimatem.gui.Import.ImportCategoryGUI();
-        managerCustomerGUI1 = new org.nam16tuoimatem.gui.Customer.ManagerCustomerGUI();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        importVegetableGUI2 = new org.nam16tuoimatem.gui.Import.ImportVegetableGUI();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 470));
@@ -39,29 +36,24 @@ public class MainGUI extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Sales Manager");
 
-        jTabbedPane1.addTab("Order", orderGUI1);
-        jTabbedPane1.addTab("Import Vegetable", importVegetableGUI1);
-        jTabbedPane1.addTab("Import Category", importCategoryGUI1);
-        jTabbedPane1.addTab("Manager Customer", managerCustomerGUI1);
+        jTabbedPane2.addTab("tab1", importVegetableGUI2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 841, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(316, 316, 316)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(367, Short.MAX_VALUE))
+            .addComponent(jTabbedPane2)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE))
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE))
         );
 
         pack();
@@ -104,11 +96,8 @@ public class MainGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.nam16tuoimatem.gui.Import.ImportCategoryGUI importCategoryGUI1;
-    private org.nam16tuoimatem.gui.Import.ImportVegetableGUI importVegetableGUI1;
+    private org.nam16tuoimatem.gui.Import.ImportVegetableGUI importVegetableGUI2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private org.nam16tuoimatem.gui.Customer.ManagerCustomerGUI managerCustomerGUI1;
-    private org.nam16tuoimatem.gui.Order.OrderGUI orderGUI1;
+    private javax.swing.JTabbedPane jTabbedPane2;
     // End of variables declaration//GEN-END:variables
 }
