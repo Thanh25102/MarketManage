@@ -46,7 +46,7 @@ class BaseRepo<T> implements CrudRepository<T>{
                                 criteriaBuilder.and(criteriaBuilder.equal(root.get(search.getField()), search.getValue()))
                 )
         );
-
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOO" + criteria.toString());
         TypedQuery<T> query = session.createQuery(criteria);
         return query.getResultList();
     }

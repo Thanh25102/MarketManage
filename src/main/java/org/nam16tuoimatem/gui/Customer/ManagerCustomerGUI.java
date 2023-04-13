@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package org.nam16tuoimatem.gui.Customer;
+package org.nam16tuoimatem.gui.customer;
 
 import java.util.ArrayList;
 import java.util.List;
