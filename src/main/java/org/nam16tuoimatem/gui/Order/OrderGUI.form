@@ -160,6 +160,9 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JTextField" name="txtVegetableName">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
@@ -273,6 +276,9 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JTextField" name="txtPrice">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
@@ -293,7 +299,7 @@
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="spAmount" min="-2" pref="134" max="-2" attributes="0"/>
+                  <Component id="spCount" min="-2" pref="134" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -304,7 +310,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="spAmount" min="-2" max="-2" attributes="0"/>
+                  <Component id="spCount" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -313,10 +319,10 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Amount"/>
+            <Property name="text" type="java.lang.String" value="Count"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="spAmount">
+        <Component class="javax.swing.JSpinner" name="spCount">
         </Component>
       </SubComponents>
     </Container>
