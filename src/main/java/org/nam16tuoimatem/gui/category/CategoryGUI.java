@@ -219,7 +219,7 @@ public class CategoryGUI extends javax.swing.JPanel {
         if (selected >= 0) {
             int id = (int) tableCategory.getValueAt(selected, 0);
             list.stream().forEach(item -> {
-                if (item.getCategoryId()== id) {
+                if (item.getCategoryId() == id) {
                     txtCategoryName.setText(item.getName());
                     txtDescription.setText(item.getDescription());
                 }
@@ -237,9 +237,8 @@ public class CategoryGUI extends javax.swing.JPanel {
 
         Category instructor = new Category();
 
-        instructor.setName(txtCategoryName.getText());        
+        instructor.setName(txtCategoryName.getText());
         instructor.setDescription(txtDescription.getText());
-
 
         list.add(CategoryService.getInstance().saveOrUpdate(instructor));
         reloadTable();
@@ -260,7 +259,7 @@ public class CategoryGUI extends javax.swing.JPanel {
 
             instructor.setName(txtCategoryName.getText());
             instructor.setDescription(txtDescription.getText());
-            
+
             CategoryService.getInstance().saveOrUpdate(instructor);
 
             initTable();
@@ -296,12 +295,16 @@ public class CategoryGUI extends javax.swing.JPanel {
         if (!txtCategoryName.getText().equals("")) {
             search.add(new SearchMap("name", txtCategoryName.getText()));
         }
-        
-         if (!txtDescription.getText().equals("")) {
+
+        if (!txtDescription.getText().equals("")) {
             search.add(new SearchMap("description", txtDescription.getText()));
         }
 
         list = CategoryService.getInstance().findByFields(search);
+
+        if (list.isEmpty()) {
+            NotificationUtil.showInformation(this, "Can't find any record of Category");
+        }
 
         reloadTable();
     }//GEN-LAST:event_btnSearchActionPerformed

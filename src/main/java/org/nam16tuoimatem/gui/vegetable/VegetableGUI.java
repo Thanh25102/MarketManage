@@ -473,12 +473,16 @@ public class VegetableGUI extends javax.swing.JPanel {
         if (!txtUnit.getText().equals("")) {
             search.add(new SearchMap("unit", txtUnit.getText()));
         }
-        
+
         if (!txtVegetableName.getText().equals("")) {
             search.add(new SearchMap("vegetableName", txtVegetableName.getText()));
         }
 
         list = VegetableService.getInstance().findByFields(search);
+
+        if (list.isEmpty()) {
+            NotificationUtil.showInformation(this, "Can't find any record of Vegetable");
+        }
 
         reloadTable();
     }//GEN-LAST:event_btnSearchActionPerformed

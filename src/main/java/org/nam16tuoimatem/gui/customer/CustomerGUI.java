@@ -354,6 +354,10 @@ public class CustomerGUI extends javax.swing.JPanel {
         }
 
         list = CustomerService.getInstance().findByFields(search);
+        
+        if(list.isEmpty()) {
+            NotificationUtil.showInformation(this, "Can't find any record of Customer");
+        }
 
         reloadTable();
 

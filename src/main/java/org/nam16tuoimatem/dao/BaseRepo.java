@@ -42,11 +42,15 @@ class BaseRepo<T> implements CrudRepository<T>{
         searchMap.forEach(search ->
                 criteria.where(
                         search.getField() instanceof String ?
-                                criteriaBuilder.and(criteriaBuilder.like(root.get(search.getField()), search.getValue().toString())) :
-                                criteriaBuilder.and(criteriaBuilder.equal(root.get(search.getField()), search.getValue()))
+                                criteriaBuilder.and(criteriaBuilder.like(
+                                        root.get(search.getField()), 
+                                        search.getValue().toString())) :
+                                criteriaBuilder.and(criteriaBuilder.equal(
+                                        root.get(search.getField()), 
+                                        search.getValue()))
                 )
         );
-        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOO" + criteria.toString());
+  
         TypedQuery<T> query = session.createQuery(criteria);
         return query.getResultList();
     }
@@ -54,9 +58,11 @@ class BaseRepo<T> implements CrudRepository<T>{
     public T saveOrUpdate(T data) {
         return factory.getCurrentSession().merge(data);
     }
+    
     @Override
     public void delete(Integer id) {
-
+        T temp = this.findOne(id);
+        factory.getCurrentSession().remove(temp);
     }
     protected CriteriaQuery<T> getCriteriaQuery(Session session) {
         return session.getCriteriaBuilder().createQuery(type);

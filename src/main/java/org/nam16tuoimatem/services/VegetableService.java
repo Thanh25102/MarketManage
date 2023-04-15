@@ -41,7 +41,8 @@ public class VegetableService extends ParentService<Vegetable> {
     }
 
     public List<VegetableRecord> findByFields(List<SearchMap> searchMap) {
-        List<Vegetable> vegetables = (List<Vegetable>) transaction.doInTransaction(() -> vegetableRepo.findByFields(searchMap));
+        List<Vegetable> vegetables = (List<Vegetable>) transaction.doInTransaction(() -> 
+                vegetableRepo.findByFields(searchMap));
         if(vegetables == null) return List.of();
         return vegetables.stream().map(v -> new VegetableRecord(v.getVegetableId(),
                 v.getVegetableName(),

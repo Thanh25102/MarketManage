@@ -463,6 +463,10 @@ public class OrderGUI extends javax.swing.JPanel {
 
         list = VegetableService.getInstance().findByFields(search);
 
+        if (list.isEmpty()) {
+            NotificationUtil.showInformation(this, "Can't find any record of Vegetable");
+        }
+
         reloadTable();
     }//GEN-LAST:event_btnSearchActionPerformed
 
@@ -475,25 +479,26 @@ public class OrderGUI extends javax.swing.JPanel {
 
         Integer selected = tableVegetable.getSelectedRow();
         if (selected >= 0) {
-            int id = (int) tableVegetable.getValueAt(selected, 0);
-            Vegetable instructor = VegetableService.getInstance().findOne(id);
 
-            Double total = instructor.getPrice() * (int) spCount.getValue();
+            VegetableRecord instructor = list.get(selected);
 
-            VegetableOrderRecord vegetableItem = new VegetableOrderRecord(instructor.getVegetableId(), instructor.getVegetableName(), instructor.getPrice(), (int) spCount.getValue(), total);
+            Double total = instructor.price() * (int) spCount.getValue();
+
+            VegetableOrderRecord vegetableItem = new VegetableOrderRecord(
+                    instructor.vegetableId(),
+                    instructor.vegetableName(),
+                    instructor.price(),
+                    (int) spCount.getValue(), total);
 
             orderList.add(vegetableItem);
 
             totalOrder += total;
             txtTotal.setText(totalOrder.toString());
-            instructor.setAmount(instructor.getAmount() - (int) spCount.getValue());
-            VegetableService.getInstance().saveOrUpdate(instructor);
 
+            initOrderTable();
+            initTable();
+            resetForm();
         }
-
-        initOrderTable();
-        initTable();
-        resetForm();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -505,26 +510,23 @@ public class OrderGUI extends javax.swing.JPanel {
 
         Integer selected = tableVegetableOrder.getSelectedRow();
         if (selected >= 0) {
-            int id = (int) tableVegetableOrder.getValueAt(selected, 0);
-            int currentCount = Integer.parseInt(tableVegetableOrder.getValueAt(selected, 3).toString());
+
             int updatedCount = Integer.parseInt(spCount.getValue().toString());
+            VegetableRecord instructor = list.get(selected);
 
-            Vegetable instructor = VegetableService.getInstance().findOne(id);
+            Double total = instructor.price() * updatedCount;
 
-            if (currentCount > updatedCount) {
-                instructor.setAmount(instructor.getAmount() + (currentCount - updatedCount));
-            } else if (currentCount < updatedCount) {
-                instructor.setAmount(instructor.getAmount() - (updatedCount - currentCount));
-            }
+            VegetableOrderRecord updatedVegetableItem = new VegetableOrderRecord(
+                    instructor.vegetableId(),
+                    instructor.vegetableName(),
+                    instructor.price(),
+                    updatedCount, total);
 
-            Double total = instructor.getPrice() * updatedCount;
-
-            VegetableOrderRecord updatedVegetableItem = new VegetableOrderRecord(id, instructor.getVegetableName(), instructor.getPrice(), updatedCount, total);
             orderList.set(selected, updatedVegetableItem);
 
             totalCalculate();
             txtTotal.setText(totalOrder.toString());
-            VegetableService.getInstance().saveOrUpdate(instructor);
+
             initOrderTable();
             initTable();
             resetForm();
@@ -540,18 +542,12 @@ public class OrderGUI extends javax.swing.JPanel {
 
         Integer selected = tableVegetableOrder.getSelectedRow();
         if (selected >= 0) {
-            int id = (int) tableVegetableOrder.getValueAt(selected, 0);
-            int count = Integer.parseInt(tableVegetableOrder.getValueAt(selected, 3).toString());
-
-            Vegetable instructor = VegetableService.getInstance().findOne(id);
-            instructor.setAmount(instructor.getAmount() + count);
-
             VegetableOrderRecord deletedVegetable = orderList.get(selected);
             orderList.remove(deletedVegetable);
 
             totalCalculate();
             txtTotal.setText(totalOrder.toString());
-            VegetableService.getInstance().saveOrUpdate(instructor);
+
             initOrderTable();
             initTable();
             resetForm();
@@ -560,6 +556,10 @@ public class OrderGUI extends javax.swing.JPanel {
 
     private void btnCheckOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckOutActionPerformed
         // TODO add your handling code here:
+        int choice = NotificationUtil.showYesNo(this, "Question", "Do you want to check out");
+        if (choice == NotificationUtil.NO) {
+            return;
+        }
 
         Order order = new Order();
 
@@ -573,7 +573,7 @@ public class OrderGUI extends javax.swing.JPanel {
         order.setDate(new Date(System.currentTimeMillis()));
 
         Order orderRes = OrderService.getInstance().saveOrUpdate(order);
-     
+
         List<OrderDetail> listOrderDetail = new ArrayList<>();
         orderList.stream().forEach(item -> {
             OrderDetail orderdetail = new OrderDetail();
