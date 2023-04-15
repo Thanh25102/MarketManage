@@ -18,7 +18,7 @@ import org.nam16tuoimatem.utils.NotificationUtil;
  *
  * @author popu
  */
-public class ManagerCustomerGUI extends javax.swing.JPanel {
+public class CustomerGUI extends javax.swing.JPanel {
 
     private List<Customers> list;
     private BaseTable model;
@@ -26,7 +26,7 @@ public class ManagerCustomerGUI extends javax.swing.JPanel {
     /**
      * Creates new form ImportCatagoryGUI
      */
-    public ManagerCustomerGUI() {
+    public CustomerGUI() {
         initComponents();
         initTable();
     }

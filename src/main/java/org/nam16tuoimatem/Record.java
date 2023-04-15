@@ -5,7 +5,7 @@ import java.util.Date;
 public class Record {
     public record VegetableRecord(Integer vegetableId,String vegetableName,String unit,Integer amount,String image,Double price, String categoryName){}
 
-    public record CategoryRecord(Integer categoryId, String name, String description) {
+    public record OrderRecord(Integer orderId, Integer customerId, String customerName, Double total, Date date,  String notes) {
     }
 
     public record CustomerRecord(Integer customerId, String password, String fullname, String address, String city) {

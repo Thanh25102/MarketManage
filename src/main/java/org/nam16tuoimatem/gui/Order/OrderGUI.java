@@ -223,6 +223,7 @@ public class OrderGUI extends javax.swing.JPanel {
         );
 
         txtPrice.setEditable(false);
+        txtPrice.setText("0");
 
         jLabel4.setText("Price");
 
@@ -320,6 +321,8 @@ public class OrderGUI extends javax.swing.JPanel {
             }
         });
 
+        txtTotal.setText("0");
+        txtTotal.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtTotal.setEnabled(false);
 
         jLabel7.setText("Total");
@@ -570,7 +573,7 @@ public class OrderGUI extends javax.swing.JPanel {
         order.setDate(new Date(System.currentTimeMillis()));
 
         Order orderRes = OrderService.getInstance().saveOrUpdate(order);
-
+     
         List<OrderDetail> listOrderDetail = new ArrayList<>();
         orderList.stream().forEach(item -> {
             OrderDetail orderdetail = new OrderDetail();
@@ -582,7 +585,7 @@ public class OrderGUI extends javax.swing.JPanel {
         });
 
         orderRes.setOrderDetailsByOrderId(listOrderDetail);
-        OrderService.getInstance().saveOrUpdate(order);
+        OrderService.getInstance().saveOrUpdate(orderRes);
 
         orderList.clear();
         initOrderTable();
