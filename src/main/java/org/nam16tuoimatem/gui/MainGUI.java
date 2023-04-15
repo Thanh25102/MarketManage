@@ -27,8 +27,8 @@ public class MainGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
-        importVegetableGUI2 = new org.nam16tuoimatem.gui.Import.ImportVegetableGUI();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        orderGUI1 = new org.nam16tuoimatem.gui.order.OrderGUI();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 470));
@@ -36,7 +36,7 @@ public class MainGUI extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Sales Manager");
 
-        jTabbedPane2.addTab("tab1", importVegetableGUI2);
+        jTabbedPane1.addTab("tab1", orderGUI1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -46,14 +46,14 @@ public class MainGUI extends javax.swing.JFrame {
                 .addGap(316, 316, 316)
                 .addComponent(jLabel1)
                 .addContainerGap(367, Short.MAX_VALUE))
-            .addComponent(jTabbedPane2)
+            .addComponent(jTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE))
         );
 
         pack();
@@ -96,8 +96,8 @@ public class MainGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.nam16tuoimatem.gui.Import.ImportVegetableGUI importVegetableGUI2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private org.nam16tuoimatem.gui.order.OrderGUI orderGUI1;
     // End of variables declaration//GEN-END:variables
 }

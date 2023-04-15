@@ -12,6 +12,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Table(name = "Order_")
 public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -26,9 +27,11 @@ public class Order {
     @Basic
     @Column(name = "Note", nullable = false, length = -1)
     private String note;
+    
     @ManyToOne
     @JoinColumn(name = "CustomerID", referencedColumnName = "CustomerID", nullable = false)
     private Customers customersByCustomerId;
+    
     @OneToMany(mappedBy = "orderDetailsByOrderId")
     private Collection<OrderDetail> orderDetailsByOrderId;
 }

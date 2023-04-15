@@ -82,7 +82,7 @@ VALUES (9);
 -- Cấu trúc bảng cho bảng `Order`
 --
 
-CREATE TABLE `Order`
+CREATE TABLE `Order_`
 (
     `OrderID`    int(10)   NOT NULL primary key auto_increment,
     `CustomerID` int(10)          NOT NULL,
@@ -103,7 +103,7 @@ CREATE TABLE `OrderDetail`
 (
     `OrderID`     int(10)  NOT NULL,
     `VegetableID` int(10)          NOT NULL,
-    `Quantity`    tinyint(4)       NOT NULL,
+    `Quantity`    int(10)       NOT NULL,
     `Price`       float            NOT NULL,
     primary key (OrderID, VegetableID)
 ) ENGINE = InnoDB
@@ -134,10 +134,10 @@ CREATE TABLE `Vegetable`
 
 alter table `Vegetable`
     add constraint fk_1 foreign key (CatagoryID) references `Category` (CatagoryID);
-alter table `Order`
+alter table `Order_`
     add constraint fk_2 foreign key (CustomerID) references `Customers` (CustomerID);
 alter table `OrderDetail`
-    add constraint fk_3 foreign key (OrderID) references `Order` (OrderID);
+    add constraint fk_3 foreign key (OrderID) references `Order_` (OrderID);
 alter table `OrderDetail`
     add constraint fk_4 foreign key (VegetableID) references `Vegetable` (VegetableID);
 --
@@ -175,7 +175,7 @@ VALUES ('Abcd1234', 'John Smith', '30 Broadway', 'London'),
 -- Đang đổ dữ liệu cho bảng `Order`
 --
 
-INSERT INTO `Order` (`CustomerID`, `Date`, `Total`, `Note`)
+INSERT INTO `Order_` (`CustomerID`, `Date`, `Total`, `Note`)
 VALUES (1, '2021-08-15', 150000, 'Use environmental protection bags'),
        (2, '2021-08-16', 235000, ''),
        (3, '2021-08-16', 65000, 'Need fast delivery'),

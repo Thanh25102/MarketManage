@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package org.nam16tuoimatem.gui.Import;
+package org.nam16tuoimatem.gui.category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import org.nam16tuoimatem.utils.NotificationUtil;
  *
  * @author popu
  */
-public class ImportCategoryGUI extends javax.swing.JPanel {
+public class CategoryGUI extends javax.swing.JPanel {
 
     private List<Category> list;
     private BaseTable model;
@@ -26,7 +26,7 @@ public class ImportCategoryGUI extends javax.swing.JPanel {
     /**
      * Creates new form ImportCategoryGUI
      */
-    public ImportCategoryGUI() {
+    public CategoryGUI() {
         initComponents();
         initTable();
     }

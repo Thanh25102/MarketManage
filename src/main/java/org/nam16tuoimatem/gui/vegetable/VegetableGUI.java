@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package org.nam16tuoimatem.gui.Import;
+package org.nam16tuoimatem.gui.vegetable;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import org.nam16tuoimatem.model.SearchMap;
  *
  * @author popu
  */
-public class ImportVegetableGUI extends javax.swing.JPanel {
+public class VegetableGUI extends javax.swing.JPanel {
 
     private List<VegetableRecord> list;
     private BaseTable model;
@@ -30,7 +30,7 @@ public class ImportVegetableGUI extends javax.swing.JPanel {
     /**
      * Creates new form ImportCatagoryGUI
      */
-    public ImportVegetableGUI() {
+    public VegetableGUI() {
         initComponents();
         initTable();
     }
